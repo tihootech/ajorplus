@@ -106,7 +106,7 @@
                     <form class="mounth-form" @submit.prevent="updateMounth">
                         <div class="input-group">
                             <label class="label"> آجر </label>
-                            <select class="input" v-model="currentMounth.symbol">
+                            <select class="input" v-model="currentMounth.brick">
                                 <option value="3.6">3.6</option>
                                 <option value="5.6">5.6</option>
                                 <option value="L">لیفتون</option>

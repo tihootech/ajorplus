@@ -5,7 +5,7 @@
     <div class="dashboard-area">
         <aside>
             <div class="dashboard-logo">
-                <img class="logo-img" src="/assets/img/logo.png" alt="AJOR-PLUS">
+                <!-- <img class="logo-img" src="/assets/img/logo.png" alt="AJOR-PLUS"> -->
             </div>
             <nav class="dashboard-nav">
                 <Link :href="route('admin.home')" class="nav-link" :class="{active:route().current() == 'admin.home'}">

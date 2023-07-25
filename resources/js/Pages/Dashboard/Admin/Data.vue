@@ -52,7 +52,11 @@
                     <form v-if="currentMounth" class="mounth-form" @submit.prevent="saveMounth">
                         <div class="input-group">
                             <label class="label"> آجر </label>
-                            <input type="text" class="input" v-model="currentMounth.brick">
+                            <select class="input" v-model="currentMounth.brick">
+                                <option value="3.6">3.6</option>
+                                <option value="5.6">5.6</option>
+                                <option value="L">لیفتون</option>
+                            </select>
                         </div>
                         <div class="input-group">
                             <label class="label"> نام </label>
