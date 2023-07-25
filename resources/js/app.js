@@ -17,6 +17,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 // IMPORTING GLOBAL COMPONENTS
 import Toggler from './GlobalComponents/Toggler.vue';
+import Btn from './GlobalComponents/Btn.vue';
 
 // CUSTOM DIRECTIVES
 const clickOutside = {
@@ -156,9 +157,6 @@ var swalDefaultRes = function(res, successMessage = null, failureMessage = null)
         if (res.data.message) {
             failureMessage = res.data.message;
         }
-        if (res.data.error) {
-            failureMessage = res.data.error;
-        }
         this.swalError(failureMessage);
     }
 };
@@ -217,7 +215,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
         .mixin({
             methods: methods,
-            components : { Link, Toggler }
+            components : { Link, Toggler, Btn }
         })
         .directive('click-outside', clickOutside)
         .use(VueSweetalert2)

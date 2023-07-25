@@ -16,7 +16,22 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/dashboard');
 
 Route::get('login', 'AuthController@loginForm')->middleware('guest')->name('login');
+Route::post('login', 'AuthController@doLogin')->middleware('guest')->name('do_login');
 
-Route::prefix('/dashboard')->middleware('auth')->group(function () {
-    Route::get('/', 'DashboardController@loadDashboard');
+Route::prefix('dashboard')->middleware('auth')->group(function () {
+
+    Route::get('/', 'DashboardController@loadDashboard')->name('dashboard');
+
+    Route::prefix('admin')->middleware('admin')->group(function () {
+
+        Route::get('/', 'AdminDashboardController@home')->name('admin.home');
+
+    });
+
+    Route::prefix('viewer')->middleware('viewer')->group(function () {
+
+        Route::get('/', 'ViewerDashboardController@home')->name('viewer.home');
+
+    });
+
 });

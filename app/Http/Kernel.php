@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
 
         // custom route middlewares
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'viewer' => \App\Http\Middleware\ViewerMiddleware::class,
     ];
 }

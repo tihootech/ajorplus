@@ -9,6 +9,6 @@ class DashboardController extends Controller
     public function loadDashboard()
     {
         $user = auth()->user();
-        dd($user);
+        return redirect()->route("$user->role.home");
     }
 }
