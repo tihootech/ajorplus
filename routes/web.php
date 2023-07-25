@@ -35,6 +35,12 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::delete('{user}', 'UsersController@destroy')->name('user.destroy');
         });
 
+        Route::prefix('mounth')->group(function () {
+            Route::post('/', 'MounthsController@store')->name('mounth.store');
+            Route::put('{mounth}', 'MounthsController@update')->name('mounth.update');
+            Route::delete('{mounth}', 'MounthsController@destroy')->name('mounth.destroy');
+        });
+
     });
 
     Route::prefix('viewer')->middleware('viewer')->group(function () {

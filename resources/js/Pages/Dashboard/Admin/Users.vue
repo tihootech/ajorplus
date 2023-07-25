@@ -98,7 +98,7 @@ export default {
     },
     methods : {
         createUser : function () {
-            this.currentUser = {id : 0, name : '', email : '', password : ''};
+            this.currentUser = {id : 0};
             this.modalIsOpen = true;
         },
         editUser : function (index) {
@@ -146,19 +146,15 @@ export default {
 }
 
 .user-form > .input-group {
-    width: 25%;
-}
-
-.user-form > .input-group:last-child {
-    width: 15%;
+    width: 50%;
 }
 
 .action:not(:last-child) {
     margin-left: 8px;
 }
 
-.action i {
-    font-size: 22px;
+.action {
+    margin: 0 4px;
 }
 
 </style>

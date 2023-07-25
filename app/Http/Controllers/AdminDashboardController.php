@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\Mounth;
 
 class AdminDashboardController extends Controller
 {
@@ -20,7 +21,9 @@ class AdminDashboardController extends Controller
 
     public function data()
     {
-        return Inertia::render('Dashboard/Admin/Data');
+        // TODO: use pagination for users
+        $mounths = Mounth::orderBy('num')->get();
+        return Inertia::render('Dashboard/Admin/Data', compact('mounths'));
     }
 
     public function users()

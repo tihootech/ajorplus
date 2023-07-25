@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('mounths', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('num');
             $table->string('symbol');
             $table->string('name');
             $table->string('quantity');
-            $table->string('state');
+            $table->unsignedSmallInteger('state');
             $table->string('brick');
-            $table->text('dis');
-           $table->timestamps();
+            $table->boolean('mark')->default(0);
+            $table->boolean('fire')->default(0);
+            $table->text('discription')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('mounths');
     }
 };
