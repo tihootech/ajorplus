@@ -172,6 +172,64 @@ var swalGeneralErrors = function(err) {
         this.swalError();
     }
 }
+var swalAreYouSure = function(url, array = [], index = -1, method = 'delete', redirectURL = '', spArr = []) {
+    this.$swal({
+        title: 'آیا مطمئن هستید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'انصراف'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            // if is confirmed
+            axios({
+                url: url,
+                method: method,
+            }).then(res => {
+                if (res.data.success) {
+                    var showConfirmButton = false;
+                    var timer = 2000;
+                    if (array.length) {
+                        array.splice(index, 1);
+                    }
+                    if (res.data.message) {
+                        var message = res.data.message;
+                        showConfirmButton = true;
+                        timer = 5000;
+                    }else {
+                        var message = method == 'delete' ? 'آیتم مورد نظر با موفقیت حذف شد.' : 'تغییرات با موفقیت ذخیره شد.';
+                    }
+                    Swal.fire({
+                        icon: 'success',
+                        title: message,
+                        showConfirmButton: showConfirmButton,
+                        timer: timer
+                    });
+                    if (redirectURL) {
+                        this.openURL(redirectURL);
+                    }
+                    if (spArr.length) {
+                        var indexToDelete = spArr.indexOf(index);
+                        if (indexToDelete > -1) {
+                            spArr.splice(indexToDelete, 1);
+                        }
+                    }
+                }
+            });
+        }else {
+
+            // if not confirmed
+            if (spArr.length) {
+                var indexToDelete = spArr.indexOf(index);
+                if (indexToDelete > -1) {
+                    spArr.splice(indexToDelete, 1);
+                }
+            }
+
+        }
+    });
+}
 var toggleInArray = function (arr, value) {
     var index = arr.indexOf(value);
     if (index >= 0) {
@@ -202,6 +260,7 @@ var methods = {
     swalErrorsArray,
     swalDefaultRes,
     swalGeneralErrors,
+    swalAreYouSure,
     toggleInArray,
 };
 

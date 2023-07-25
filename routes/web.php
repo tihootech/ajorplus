@@ -25,6 +25,15 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::prefix('admin')->middleware('admin')->group(function () {
 
         Route::get('/', 'AdminDashboardController@home')->name('admin.home');
+        Route::get('/qomers', 'AdminDashboardController@qomers')->name('admin.qomers');
+        Route::get('/users', 'AdminDashboardController@users')->name('admin.users');
+        Route::get('/data', 'AdminDashboardController@data')->name('admin.data');
+
+        Route::prefix('user')->group(function () {
+            Route::post('/', 'UsersController@store')->name('user.store');
+            Route::put('{user}', 'UsersController@update')->name('user.update');
+            Route::delete('{user}', 'UsersController@destroy')->name('user.destroy');
+        });
 
     });
 

@@ -1,5 +1,5 @@
 <template>
-    <Component :is="tag" type="submit" class="btn" :class="theme" :disabled="loading">
+    <Component :is="tag" type="submit" class="btn" :class="`${theme} ${block ? 'block' : ''}`" :disabled="loading">
         <template v-if="loading">
             <div class="loading-ring"></div>
             <span class="btn-loading-content"> لطفا صبر کنید... </span>
@@ -18,6 +18,7 @@ export default {
         icon : { type : String, default : '' },
         theme : { type : String, default : 'primary' },
         loading : { type : Boolean, default : false },
+        block : { type : Boolean, default : false },
     }
 }
 </script>
@@ -43,6 +44,10 @@ export default {
     background: inherit;
 }
 
+.btn.block {
+    width: 100%;
+}
+
 .btn:disabled {
     cursor:not-allowed;
 }
@@ -58,6 +63,11 @@ export default {
     height: 150px;
     width: 275px;
     border-radius: 50%;
+}
+
+.btn.block:before {
+    width: 700px;
+    height: 100px;
 }
 
 .btn:before {
@@ -106,6 +116,50 @@ export default {
 }
 .btn.primary:not(:disabled):active:before {
     background: var(--primary-darken-1);
+}
+
+.btn.success {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.btn.success:disabled {
+    border-color: var(--success-lighten-1);
+    color: var(--success-lighten-1);
+}
+
+.btn.success:not(:disabled):before {
+    background: var(--success);
+}
+
+.btn.success:not(:disabled):hover {
+    color: #fff;
+    border-color: var(--success-darken-1);
+}
+.btn.success:not(:disabled):active:before {
+    background: var(--success-darken-1);
+}
+
+.btn.warning {
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+.btn.warning:disabled {
+    border-color: var(--warning-lighten-1);
+    color: var(--warning-lighten-1);
+}
+
+.btn.warning:not(:disabled):before {
+    background: var(--warning);
+}
+
+.btn.warning:not(:disabled):hover {
+    color: #fff;
+    border-color: var(--warning-darken-1);
+}
+.btn.warning:not(:disabled):active:before {
+    background: var(--warning-darken-1);
 }
 
 /* LOADING RING */

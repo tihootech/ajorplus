@@ -15,6 +15,7 @@
         "@inertiajs/progress": "^0.2.7",
         "@inertiajs/vue3": "^1.0.9",
         "@vitejs/plugin-vue": "^4.2.3",
+        "bootstrap": "^5.3.0",
         "bootstrap-icons": "^1.10.5",
         "nprogress": "^0.2.0",
         "vue": "^3.3.4",

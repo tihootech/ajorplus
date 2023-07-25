@@ -8,7 +8,7 @@
     font-family: 'IRANSans';
     font-style: normal;
     font-weight: 300;
-    src: url('assets/fonts/IRANSansWeb.woff');
+    src: url('/assets/fonts/IRANSansWeb.woff');
 }
 
 
@@ -29,16 +29,27 @@
     --primary-darken-3 : #601b02;
     --primary-darken-4 : #300d01;
 
-    --secondary : #59565C;
+    --dashboard-light : #eff6ee;
+    --dashboard-gray : #9197ae;
+    --dashboard-dark : #273043;
+
+    --success : #16db65;
+    --success-darken-1 : #11af50;
+    --success-lighten-1 : #3beb81;
+
+    --warning : #ffb703;
+    --warning-darken-1 : #ce9300;
+    --warning-lighten-1 : #ffc535;
 
     /* frequently used variables */
     --box-shadow : 0 0 #0000 , 0 0 #0000 , 0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);
 
     /* other general colors */
     --black : #05060f;
+    --almost-white : #f0f0f0;
     --light-gray : #aaa;
     --gray : #6a7180;
-    --body-bg : #f0f0f0;
+    --body-bg : #eff6ee;
 }
 
 /*** =============================================
@@ -47,6 +58,11 @@
 
 *, *::after, *::before {
     box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -65,6 +81,7 @@ a {
 
 button {
     cursor: pointer;
+    font-family: inherit !important;
 }
 
 [placeholder] {
@@ -94,6 +111,10 @@ button {
 
 .text-primary {
     color: var(--primary);
+}
+
+.text-muted {
+    color: var(--light-gray);
 }
 
 .primary-link {
@@ -132,25 +153,70 @@ button {
 ============ *** TILE (CARD) *** ==============
 ============================================= ***/
 
+.section {
+    padding: 32px;
+}
+
+.section.heading {
+    position: sticky;
+    padding: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.section.heading > .tile {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
 .tile {
     --roundness : 24px;
     background: #fff;
     border-radius: var(--roundness);
     box-shadow: var(--box-shadow);
-    padding: var(--roundness);
+    padding: 36px 24px;
 }
 
+
+/*** =============================================
+============ *** TABLE *** ==============
+============================================= ***/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.bordered th, table.bordered td {
+    border: 2px solid var(--dashboard-dark);
+}
+
+table th, table td {
+    padding: 12px;
+}
+
+table.striped tbody tr:nth-child(even) {
+    background-color: var(--almost-white);
+}
+
+table.striped tbody tr:nth-child(odd) {
+
+}
+
+table.hovered tbody tr:hover {
+    background-color: var(--primary-lighten-4);
+}
 
 /*** =============================================
 ============ *** FORM ELEMENTS *** ==============
 ============================================= ***/
 
 .input-group {
+    padding: 8px;
     position: relative;
-}
-
-.input-group:not(:last-child) {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .input-group .input {
@@ -180,6 +246,67 @@ button {
 }
 
 /*** =============================================
+========= *** ANIMATIONS *** ==============
+============================================= ***/
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*** =============================================
+========= *** MODAL *** ==============
+============================================= ***/
+
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 67%;
+    border-radius: 24px;
+    box-shadow: var(--box-shadow);
+}
+
+/* The Close Button */
+.close {
+    float: left;
+    color: var(--gray);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: var(--black);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*** =============================================
 ========= *** ALERT COMPONENTS *** ==============
 ============================================= ***/
 
@@ -193,84 +320,12 @@ button {
 
 .alert-warning {
     padding: 20px 40px;
-    border: 2px solid black;
+    border: 2px solid var(--warning-darken-1);
     color: black;
-    background-color: #fff;
+    background-color: var(--warning);
     border-radius: 9999px;
 }
 
-/*** =============================================
-============ *** ONLY ICON BTN *** ===============
-============================================= ***/
-
-.icon-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    border: 0px solid transparent;
-    background-color: var(--primary-lighten-4);
-    color: var(--primary-darken-1);
-    border-radius: 1.25em;
-    transition: all 0.2s linear;
-    border : 2px solid var(--primary-lighten-4);
-}
-
-.icon-btn:hover {
-    color: var(--primary-darken-2);
-    background-color: var(--primary-lighten-3);
-    border-color: var(--primary-lighten-3);
-    box-shadow: 3.4px 2.5px 4.9px rgba(0, 0, 0, 0.025),
-    8.6px 6.3px 12.4px rgba(0, 0, 0, 0.035),
-    17.5px 12.8px 25.3px rgba(0, 0, 0, 0.045),
-    36.1px 26.3px 52.2px rgba(0, 0, 0, 0.055),
-    99px 72px 143px rgba(0, 0, 0, 0.08);
-}
-
-.icon-btn.active {
-    color: var(--primary-darken-2);
-    border-color: var(--primary-darken-2);
-}
-
-.icon-btn {
-    --font-size : 2rem;
-    position: relative;
-    display: inline-block;
-}
-
-.icon-btn > i {
-    font-size: var(--font-size);
-}
-
-.icon-btn .tooltiptext {
-    visibility: hidden;
-    width: 4em;
-    background-color: var(--primary-lighten-3);
-    color: var(--primary-darken-2);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    top: 25%;
-    left: 110%;
-}
-
-.icon-btn .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent var(--primary-lighten-3) transparent transparent;
-}
-
-.icon-btn:hover .tooltiptext {
-    visibility: visible;
-}
 
 /*** =============================================
 ============ *** LOADING CARD *** ================

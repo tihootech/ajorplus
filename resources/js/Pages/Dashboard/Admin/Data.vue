@@ -1,7 +1,7 @@
 <template>
-    <dashboard-layout title="داشبورد شما">
+    <dashboard-layout title="داده‌ها">
 
-        ADMIN DASHBOARD HERE...
+        DATA GOES HERE...
 
     </dashboard-layout>
 </template>

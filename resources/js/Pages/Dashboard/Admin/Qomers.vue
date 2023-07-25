@@ -1,7 +1,7 @@
 <template>
-    <dashboard-layout title="داشبورد شما">
+    <dashboard-layout title="وضعیت قمیرها">
 
-        ADMIN DASHBOARD HERE...
+        QOMERS CONTENT HERE...
 
     </dashboard-layout>
 </template>
