@@ -11,12 +11,40 @@ class AdminDashboardController extends Controller
 {
     public function home()
     {
-        return Inertia::render('Dashboard/Admin/Home');
+        return $this->homeAndQomers('home');
     }
 
     public function qomers()
     {
-        return Inertia::render('Dashboard/Admin/Qomers');
+        return $this->homeAndQomers('qomers');
+    }
+
+    public function homeAndQomers($from)
+    {
+        $symbols = ['FA', 'FB', 'FC', 'FD', 'FE'];
+        foreach ($symbols as $symbol) {
+            $forges[$symbol] = Mounth::whereSymbol($symbol)->orderBy('num')->get();
+        }
+
+        $charts = [];
+        $counts = [];
+        $bricks = ['3.6', '5.6', 'L'];
+        if ($from == 'home') {
+            for ($n=1; $n <= 4 ; $n++) {
+                $charts['all'][$n] = Mounth::where('state', $n)->count();
+                foreach ($symbols as $symbol) {
+                    $charts[$symbol][$n] = Mounth::where('state', $n)->where('symbol', $symbol)->count();
+                }
+            }
+            foreach ($bricks as $brick) {
+                $counts['all'][$brick] = Mounth::where('brick', $brick)->count();
+                foreach ($symbols as $symbol) {
+                    $counts[$symbol][$brick] = Mounth::where('brick', $brick)->where('symbol', $symbol)->count();
+                }
+            }
+        }
+
+        return Inertia::render('Dashboard/Admin/Qomers', compact('symbols', 'forges', 'charts', 'bricks', 'counts', 'from'));
     }
 
     public function data()

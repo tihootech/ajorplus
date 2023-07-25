@@ -2,10 +2,19 @@
     "WRONG_USER_PASS": "نام‌کاربری یا رمزعبور اشتباه است",
     "LOGIN_SUCCESS": "ورود با موفقیت انجام شد",
 
+    "BRICK_NAME_3.6" : "3.6",
+    "BRICK_NAME_5.6" : "5.6",
+    "BRICK_NAME_L" : "لیفتون",
+
     "MOUNTH_STATE_1" : "خالی",
     "MOUNTH_STATE_2" : "خاموش",
     "MOUNTH_STATE_3" : "درحال‌پخت",
     "MOUNTH_STATE_4" : "پخته‌شده",
+
+    "COLOR_FOR_MOUNTH_STATE_1" : "gray",
+    "COLOR_FOR_MOUNTH_STATE_2" : "brown",
+    "COLOR_FOR_MOUNTH_STATE_3" : "orange",
+    "COLOR_FOR_MOUNTH_STATE_4" : "green",
 
     "": ""
 }

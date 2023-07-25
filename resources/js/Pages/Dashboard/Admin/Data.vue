@@ -30,7 +30,7 @@
                             </td>
                             <td> {{mounth.name}} </td>
                             <td> {{mounth.quantity}} </td>
-                            <td> {{mounth.persian_state}} </td>
+                            <td> <span class="badge" :style="`--bg:${mounth.color}`"> {{mounth.persian_state}} </span> </td>
                             <td>
                                 <Btn class="action" theme="success" @click="editMounth(i)"> <i class="bi bi-pencil"></i> </Btn>
                                 <Btn class="action" theme="warning" @click="destroyMounth(i)"> <i class="bi bi-trash"></i> </Btn>
@@ -169,6 +169,15 @@ export default {
 
 <style lang="css">
 
+.action:not(:last-child) {
+    margin-left: 8px;
+}
+
+.action {
+    margin: 0 4px;
+}
+
+
 .mounth-form {
     text-align: right;
     display: flex;
@@ -191,14 +200,6 @@ export default {
 
 .mounth-form > .input-group:last-child {
     width: 50%;
-}
-
-.action:not(:last-child) {
-    margin-left: 8px;
-}
-
-.action {
-    margin: 0 4px;
 }
 
 .booleans {
