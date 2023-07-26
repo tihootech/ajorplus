@@ -49,4 +49,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 
     });
 
+    Route::get('logout', 'AuthController@logout')->name('logout');
+
 });

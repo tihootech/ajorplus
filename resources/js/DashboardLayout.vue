@@ -25,6 +25,12 @@
                     داده‌ها
                 </Link>
             </nav>
+            <div class="logout-section">
+                <a :href="route('logout')" class="logout-link">
+                    <i class="bi bi-power"></i>
+                    خروج از حساب‌کاربری
+                </a>
+            </div>
         </aside>
         <main class="main">
             <slot></slot>
@@ -70,6 +76,32 @@
     width: 15%;
     background-color: var(--dashboard-dark);
     padding: 32px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-area > aside > .logout-section {
+    margin-top: auto;
+    text-align: center;
+}
+
+.dashboard-area > aside > .logout-section > .logout-link {
+    color: var(--dashboard-light);
+    display: block;
+    padding: 16px 0;
+    transition: 0.3s;
+}
+
+.dashboard-area > aside > .logout-section > .logout-link:hover {
+    background-color: var(--dashboard-light);
+    color: var(--dashboard-dark);
+}
+
+.dashboard-area > aside > .logout-section > .logout-link > i {
+    font-size: 1.25rem;
+    margin-left: 4px;
+    position: relative;
+    top: 2px;
 }
 
 .dashboard-area > main {

@@ -30,6 +30,13 @@ class AuthController extends Controller
         }else {
             return ['succes' => false, 'message' => __('WRONG_USER_PASS')];
         }
-        dd($request->all());
+
+    }
+
+    public function logout()
+    {
+        $user = auth()->user();
+        Auth::logout($user);
+        return redirect()->route('login');
     }
 }
