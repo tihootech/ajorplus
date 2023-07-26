@@ -16,6 +16,8 @@ export default {
 label {
     direction: ltr;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
 
 .toggle-checkbox {
