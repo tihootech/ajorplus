@@ -73,7 +73,7 @@ export default {
 }
 
 .container > .card {
-    min-width: 500px;
+    width: 500px;
 }
 
 .container > .logo-img {
@@ -98,6 +98,14 @@ export default {
 
 .pass-toggle:active {
     color: var(--primary-darken-2);
+}
+
+
+@media only screen and (max-width: 600px) {
+    .container > .card {
+        width: 100%;
+        margin: 24px;
+    }
 }
 
 </style>

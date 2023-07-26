@@ -9,7 +9,7 @@
         </div>
 
         <div class="section">
-            <div class="tile">
+            <div class="tile table-container">
                 <table v-if="users.length" class="bordered striped">
                     <thead>
                         <tr>

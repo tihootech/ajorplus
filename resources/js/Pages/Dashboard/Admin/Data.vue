@@ -50,7 +50,7 @@
         </div>
 
         <div class="section">
-            <div class="tile">
+            <div class="tile table-container">
                 <table v-if="list.length" class="bordered striped">
                     <thead>
                         <tr>
@@ -370,6 +370,27 @@ export default {
     position: absolute;
     top: -10px;
     left: -10px;
+}
+
+@media only screen and (max-width: 1080px) {
+
+    .filters {
+        flex-wrap: wrap;
+    }
+    .filters > .input-group {
+        width: 50%;
+    }
+    .filters > .toggler {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+
+    .filters > .input-group {
+        width: 100%;
+    }
+
 }
 
 </style>

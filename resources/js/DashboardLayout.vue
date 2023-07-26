@@ -3,7 +3,10 @@
     <Head :title="title" />
 
     <div class="dashboard-area">
-        <aside>
+        <button type="button" class="hamburger-toggler" @click="asideOpen = true">
+            <i class="bi bi-list"></i>
+        </button>
+        <aside :class={open:asideOpen}>
             <div class="dashboard-logo">
                 <img class="logo-img" src="../images/logo.png" alt="AJOR-PLUS">
             </div>
@@ -31,6 +34,7 @@
                     خروج از حساب‌کاربری
                 </a>
             </div>
+            <i class="bi bi-x close-aside" @click="asideOpen = false"></i>
         </aside>
         <main class="main">
             <slot></slot>
@@ -54,6 +58,7 @@
         data : function () {
             return {
                 user : this.$page.props.user,
+                asideOpen : false,
             }
         }
     }
@@ -65,6 +70,7 @@
 .dashboard-area {
     height: 100vh;
     display: flex;
+    position: relative;
 }
 
 .dashboard-area main {
@@ -78,6 +84,7 @@
     padding: 32px 0;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .dashboard-area > aside > .logout-section {
@@ -146,6 +153,92 @@
 .dashboard-logo {
     margin-bottom: 24px;
     text-align: center;
+}
+
+.close-aside {
+    display: none;
+    color: var(--dashboard-light);
+    font-size: 3rem;
+    position: absolute;
+    top: 15px;
+    left: 25px;
+}
+
+.close-aside:hover, .close-aside:active {
+    color: var(--primary);
+}
+
+.hamburger-toggler {
+    position: absolute;
+    top: 90px;
+    right: 10px;
+    align-self: flex-start;
+    z-index: 10;
+    background-color: var(--dashboard-dark);
+    color: var(--primary);
+    font-size: 2.5rem;
+    width: 67px;
+    height: 67px;
+    border-radius: 50%;
+}
+
+.hamburger-toggler > i {
+    position: relative;
+    top: 3px;
+}
+
+@media only screen and (max-width: 1080px) {
+    .dashboard-area > main {
+        width: 75%;
+    }
+    .dashboard-area > aside {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 840px) {
+
+    .dashboard-area > main {
+        width: 100%;
+    }
+
+    .dashboard-area > aside {
+        display: none;
+        width: 100%;
+        z-index: 50;
+        position: absolute;
+        align-items: center;
+    }
+
+    .dashboard-area > aside.open {
+        display: block;
+    }
+
+    .dashboard-nav > .nav-link {
+        border-top-left-radius: 99px;
+        border-bottom-left-radius: 99px;
+    }
+
+    .dashboard-nav {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .close-aside {
+        display: inline-block;
+    }
+
+}
+
+@media only screen and (max-width: 620px) {
+    .dashboard-nav {
+        flex-wrap: wrap;
+        padding: 0 24px;
+    }
+    .dashboard-nav .nav-link {
+        width: 50%;
+        text-align: center;
+    }
 }
 
 </style>

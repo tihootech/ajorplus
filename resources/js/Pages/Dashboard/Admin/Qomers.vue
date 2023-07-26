@@ -101,6 +101,7 @@
                     </div>
                     <span class="forge-arrow"></span>
                 </div>
+                <hr class="big-hr mt-5">
             </div>
         </div>
 
@@ -383,140 +384,141 @@ export default {
 ============ *** FORGE SHAPES *** ================
 ============================================= ***/
 
-.forges {
-    margin: 32px;
-    background-color: #013838;
-    color: #fff;
-    position: relative;
-    padding: 1.5rem 5rem;
-    border-radius: 9999px;
-    border: 2px solid #0AD4D4;
-}
+@media only screen and (min-width: 1080px) {
+    .forges {
+        margin: 32px;
+        background-color: #013838;
+        color: #fff;
+        position: relative;
+        padding: 1.5rem 5rem;
+        border-radius: 9999px;
+        border: 2px solid #0AD4D4;
+    }
 
-.forges > .forge-parts {
-    display: flex;
-    flex-direction: column;
-}
+    .forges > .forge-parts {
+        display: flex;
+        flex-direction: column;
+    }
 
-.forges > .forge-parts > .forge-label {
-    display: flex;
-    justify-content: center;
-    border: 2px solid #0AD4D4;
-    border-radius: 99px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    padding: 4px 0;
-}
+    .forges > .forge-parts > .forge-label {
+        display: flex;
+        justify-content: center;
+        border: 2px solid #0AD4D4;
+        border-radius: 99px;
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding: 4px 0;
+    }
 
-.forges > .forge-parts > .forge-part {
-    display: flex;
-    margin: 0 24px;
-}
+    .forges > .forge-parts > .forge-part {
+        display: flex;
+        margin: 0 24px;
+    }
 
-.forges > .forge-parts > .forge-part > .forge-square {
-    width: var(--w);
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-left: 2px solid #0AD4D4;
-    cursor: pointer;
-    background-color: var(--bg);
-    transition: .2s;
-    position: relative;
+    .forges > .forge-parts > .forge-part > .forge-square {
+        width: var(--w);
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: 2px solid #0AD4D4;
+        cursor: pointer;
+        background-color: var(--bg);
+        transition: .2s;
+        position: relative;
+    }
+
+    .forges > .forge-parts > .forge-part > .forge-square:hover {
+        transform: scale(1.25);
+        border: 2px solid #0AD4D4;
+        z-index: 5;
+    }
+
+    .forges > .forge-parts > .forge-part > .forge-square:first-child {
+        border-right: 2px solid #0AD4D4;
+    }
 }
 
 .forges > .forge-parts > .forge-part > .forge-square > i {
     position: absolute;
-    top: 0;
+    top: -2.5px;
     font-size: 1.25rem;
 }
 
 .forges > .forge-parts > .forge-part > .forge-square > .fire {
-    right: 5px;
+    right: 2.5px;
 }
 
 .forges > .forge-parts > .forge-part > .forge-square > .mark {
-    left: 5px;
+    left: 2.5px;
 }
 
-.forges > .forge-parts > .forge-part > .forge-square:hover {
-    transform: scale(1.25);
-    border: 2px solid #0AD4D4;
-    z-index: 5;
-}
-
-.forges > .forge-parts > .forge-part > .forge-square:first-child {
-    border-right: 2px solid #0AD4D4;
-}
 
 /*** =============================================
 ============ *** FORGE ARROWS *** ==============
 ============================================= ***/
 
-.forge-arrow {
-    position: absolute;
-    top: 2.5rem;
-    width: 6rem;
-    height: 6rem;
-    border-radius: 15rem;
+@media only screen and (min-width: 1080px) {
+    .forge-arrow {
+        position: absolute;
+        top: 2.5rem;
+        width: 6rem;
+        height: 6rem;
+        border-radius: 15rem;
+    }
+
+    .forge-arrow::after {
+        content: '';
+        position: absolute;
+        width: 1rem;
+        transform: rotate( 20deg);
+        background-color: #fff;
+        height: .1rem;
+    }
+
+    .forge-arrow::before {
+        content: '';
+        position: absolute;
+        width: 1rem;
+        height: .1rem;
+        transform: rotate(-50deg);
+        background-color: #fff;
+    }
+
+    .forge-arrow:nth-of-type(1) {
+        right: 1.75rem;
+        border-right: 2px solid #fff;
+    }
+
+    .forge-arrow:nth-of-type(1)::after {
+        right: 1.5rem;
+        bottom: -.2rem;
+    }
+
+    .forge-arrow:nth-of-type(1)::before {
+        bottom: .4rem;
+        right: 1.6rem;
+    }
+
+    .forge-arrow:nth-of-type(2) {
+        left: 1.75rem;
+        border-left: 2px solid #fff;
+    }
+
+    .forge-arrow:nth-of-type(2)::after {
+        left: 1.5rem;
+        top: -.2rem;
+    }
+
+    .forge-arrow:nth-of-type(2)::before {
+        left: 1.6rem;
+        top: .4rem;
+    }
 }
-
-.forge-arrow::after {
-    content: '';
-    position: absolute;
-    width: 1rem;
-    transform: rotate( 20deg);
-    background-color: #fff;
-    height: .1rem;
-}
-
-.forge-arrow::before {
-    content: '';
-    position: absolute;
-    width: 1rem;
-    height: .1rem;
-    transform: rotate(-50deg);
-    background-color: #fff;
-}
-
-.forge-arrow:nth-of-type(1) {
-    right: 1.75rem;
-    border-right: 2px solid #fff;
-}
-
-.forge-arrow:nth-of-type(1)::after {
-    right: 1.5rem;
-    bottom: -.2rem;
-}
-
-.forge-arrow:nth-of-type(1)::before {
-    bottom: .4rem;
-    right: 1.6rem;
-}
-
-.forge-arrow:nth-of-type(2) {
-    left: 1.75rem;
-    border-left: 2px solid #fff;
-}
-
-.forge-arrow:nth-of-type(2)::after {
-    left: 1.5rem;
-    top: -.2rem;
-}
-
-.forge-arrow:nth-of-type(2)::before {
-    left: 1.6rem;
-    top: .4rem;
-}
-
-
 
 /*** =============================================
 ============ *** MOUNTH FORM *** ==============
 ============================================= ***/
-
-
 
 .mounth-form {
     text-align: right;
@@ -581,6 +583,45 @@ export default {
     border-color: var(--dashboard-dark);
     border-style: solid;
     margin-bottom: 32px;
+}
+
+
+
+@media only screen and (max-width: 1080px) {
+    .overview {
+        flex-wrap: wrap;
+        gap : 24px;
+    }
+    .overview > .tile {
+        width: 100% !important;
+    }
+    .forges > .forge-arrow {
+        display: none;
+    }
+    .forges > .forge-parts {
+        display: flex;
+        flex-direction: column;
+    }
+    .forges > .forge-parts > .forge-part {
+        order: 2;
+    }
+    .forges > .forge-parts > .forge-label {
+        order: 1;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .forges > .forge-parts > .forge-part > .forge-square {
+        position: relative;
+        background-color: var(--bg);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        /* border: 2px solid var(--primary); */
+        color: var(--dashboard-light);
+        margin: 4px;
+    }
 }
 
 </style>

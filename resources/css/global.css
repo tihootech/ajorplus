@@ -136,6 +136,10 @@ button {
     text-align: center;
 }
 
+.table-container {
+    overflow-x: auto;
+}
+
 /*** =============================================
 ============ *** MARGIN & PADDINGS *** ==============
 ============================================= ***/
@@ -168,6 +172,14 @@ button {
 
 .mb-4 {
     margin-bottom: 16px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.mt-5 {
+    margin-top: 20px;
 }
 
 .my-3 {
@@ -207,6 +219,16 @@ button {
     border-radius: var(--roundness);
     box-shadow: var(--box-shadow);
     padding: 36px 24px;
+}
+
+@media only screen and (max-width: 840px) {
+
+    .section.heading > .tile {
+        padding-right: 64px;
+        flex-direction: column;
+        text-align: center;
+        gap : 16px;
+    }
 }
 
 
@@ -340,6 +362,12 @@ table.hovered tbody tr:hover {
     color: var(--black);
     text-decoration: none;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 720px) {
+    .modal > .modal-content {
+        width: 94%;
+    }
 }
 
 /*** =============================================
