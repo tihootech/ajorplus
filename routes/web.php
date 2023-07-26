@@ -20,14 +20,13 @@ Route::post('login', 'AuthController@doLogin')->middleware('guest')->name('do_lo
 
 Route::prefix('dashboard')->middleware('auth')->group(function () {
 
-    Route::get('/', 'DashboardController@loadDashboard')->name('dashboard');
+    Route::get('/', 'DashboardController@home')->name('dashboard');
+    Route::get('qomers', 'DashboardController@qomers')->name('dashboard.qomers');
+    Route::get('data', 'DashboardController@data')->name('dashboard.data');
 
     Route::prefix('admin')->middleware('admin')->group(function () {
 
-        Route::get('/', 'AdminDashboardController@home')->name('admin.home');
-        Route::get('/qomers', 'AdminDashboardController@qomers')->name('admin.qomers');
-        Route::get('/users', 'AdminDashboardController@users')->name('admin.users');
-        Route::get('/data', 'AdminDashboardController@data')->name('admin.data');
+        Route::get('users', 'DashboardController@users')->name('dashboard.users');
 
         Route::prefix('user')->group(function () {
             Route::post('/', 'UsersController@store')->name('user.store');
@@ -40,12 +39,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::put('{mounth}', 'MounthsController@update')->name('mounth.update');
             Route::delete('{mounth}', 'MounthsController@destroy')->name('mounth.destroy');
         });
-
-    });
-
-    Route::prefix('viewer')->middleware('viewer')->group(function () {
-
-        Route::get('/', 'ViewerDashboardController@home')->name('viewer.home');
 
     });
 

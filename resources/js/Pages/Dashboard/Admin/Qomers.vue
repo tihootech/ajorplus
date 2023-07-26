@@ -103,7 +103,7 @@
             <div v-if="currentMounth" class="modal">
                 <div class="modal-content">
                     <span class="close" @click="currentMounth=null">&times;</span>
-                    <form class="mounth-form" @submit.prevent="updateMounth">
+                    <form v-if="canEdit" class="mounth-form" @submit.prevent="updateMounth">
                         <div class="input-group">
                             <label class="label"> آجر </label>
                             <select class="input" v-model="currentMounth.brick">
@@ -159,6 +159,18 @@
                             </Btn>
                         </div>
                     </form>
+                    <div v-else class="view-mounth">
+                        <p> <span> نام </span> <b> : </b> <strong> {{currentMounth.name}} </strong> </p>
+                        <p> <span> آجر </span> <b> : </b> <strong> {{currentMounth.brick_name}} </strong> </p>
+                        <p> <span> ظرفیت </span> <b> : </b> <strong> {{currentMounth.quantity}} </strong> </p>
+                        <p> <span> نماد </span> <b> : </b> <strong> {{currentMounth.symbol}} </strong> </p>
+                        <p> <span> وضعیت </span> <b> : </b> <strong :style="`color:${currentMounth.color}`"> {{currentMounth.persian_state}} </strong> </p>
+                        <p> <span> توضیحات </span> <b> : </b> <strong> {{currentMounth.discription}} </strong> </p>
+                        <p class="icons">
+                            <i v-if="currentMounth.fire" class="bi bi-fire"></i>
+                            <i v-if="currentMounth.mark" class="bi bi-star-fill"></i>
+                        </p>
+                    </div>
                 </div>
             </div>
         </Transition>
@@ -181,12 +193,16 @@ export default {
     },
     data : function () {
         return {
+            user : this.$page.props.user,
             currentMounth : null,
             saving : false,
             list : [],
         }
     },
     computed : {
+        canEdit : function () {
+            return this.user.role == 'admin';
+        },
         forgeList : function () {
             var result = {};
             for (var i = 0; i < this.symbols.length; i++) {
@@ -302,6 +318,16 @@ export default {
 
 .overview progress.stat-4 {
     accent-color: green;
+}
+
+.view-mounth p {
+    margin: 8px 0;
+}
+
+.view-mounth .icons i {
+    font-size: 2rem;
+    margin: 0 8px;
+    color: var(--primary);
 }
 
 /*** =============================================

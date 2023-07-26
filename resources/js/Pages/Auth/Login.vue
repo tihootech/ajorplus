@@ -4,7 +4,7 @@
         <form class="container" @submit.prevent="login">
             <div class="card tile">
                 <div class="text-center">
-                    <!-- <img class="logo-img" src="/assets/img/logo.png" alt="AJOR-PLUS"> -->
+                    <img class="logo-img" src="assets/img/logo.png" alt="AJOR-PLUS">
                 </div>
                 <div class="input-group">
                     <label class="label"> ایمیل </label>

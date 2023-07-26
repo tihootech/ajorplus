@@ -8,19 +8,19 @@
                 <!-- <img class="logo-img" src="/assets/img/logo.png" alt="AJOR-PLUS"> -->
             </div>
             <nav class="dashboard-nav">
-                <Link :href="route('admin.home')" class="nav-link" :class="{active:route().current() == 'admin.home'}">
+                <Link :href="route('dashboard')" class="nav-link" :class="{active:route().current() == 'dashboard'}">
                     <i class="bi bi-grid-1x2-fill"></i>
                     داشبورد
                 </Link>
-                <Link :href="route('admin.qomers')" class="nav-link" :class="{active:route().current() == 'admin.qomers'}">
+                <Link :href="route('dashboard.qomers')" class="nav-link" :class="{active:route().current() == 'dashboard.qomers'}">
                     <i class="bi bi-fire"></i>
                     قیمرها
                 </Link>
-                <Link :href="route('admin.users')" class="nav-link" :class="{active:route().current() == 'admin.users'}">
+                <Link v-if="user.role == 'admin'" :href="route('dashboard.users')" class="nav-link" :class="{active:route().current() == 'dashboard.users'}">
                     <i class="bi bi-person-fill"></i>
                     سطوح دسترسی
                 </Link>
-                <Link :href="route('admin.data')" class="nav-link" :class="{active:route().current() == 'admin.data'}">
+                <Link :href="route('dashboard.data')" class="nav-link" :class="{active:route().current() == 'dashboard.data'}">
                     <i class="bi bi-database-fill"></i>
                     داده‌ها
                 </Link>
