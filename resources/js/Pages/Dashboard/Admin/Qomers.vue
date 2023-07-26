@@ -15,22 +15,28 @@
             <div v-for="item in list" :id="`section-${item}`">
                 <div class="overview">
                     <div class="tile">
-                        <h3 class="mb-4"> وضعیت هر دهانه <span v-if="item != all"> قیمر {{item}} </span> </h3>
+                        <h3 class="mb-4"> وضعیت هر دهانه <span v-if="item != 'all'"> قیمر {{item}} </span> </h3>
                         <div class="mounth-stats">
                             <div v-for="n in 4">
                                 <span v-if="n == 1"> خالی </span>
                                 <span v-if="n == 2"> خاموش </span>
                                 <span v-if="n == 3"> درحال‌پخت </span>
                                 <span v-if="n == 4"> پخته‌شده </span>
-                                <b> {{charts.all[n]}} </b>
-                                <progress :value="charts[item][n]" :max="totals['all']" :class="`stat-${n}`"></progress>
+                                <b> : {{charts[item][n]}} </b>
+                                <div class="progress-bar" :class="`stat-${n}`">
+                                    <div class="progress" :style="`width:${(charts[item][n] * 100) / totals[item]}%`"> {{Math.round((charts[item][n] * 100) / totals[item])}}% </div>
+                                </div>
                             </div>
                         </div>
+                        <hr class="my-3">
+                        <p> مجموع : {{totals[item]}} </p>
                     </div>
                     <div class="tile">
                         <h3 v-if="item == 'all'" class="mb-4"> وضعیت کلی قمیرها </h3>
                         <h3 v-else class="mb-4"> وضعیت کلی قمیر {{item}} </h3>
-                        نمایش چارت...
+                        <div class="pie-chart-container">
+                            <Pie :options="chartOptions" :data="chartsData[item]" />
+                        </div>
                     </div>
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت آجرها </h3>
@@ -184,8 +190,12 @@
 import { defineComponent } from 'vue';
 import DashboardLayout from '@/DashboardLayout.vue';
 
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'vue-chartjs';
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 export default {
-    components: { DashboardLayout },
+    components: { DashboardLayout, Pie },
     props : ['symbols', 'forges', 'charts', 'bricks', 'counts', 'from'],
     mounted : function () {
         this.list = [...this.symbols];
@@ -197,6 +207,10 @@ export default {
             currentMounth : null,
             saving : false,
             list : [],
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
         }
     },
     computed : {
@@ -222,12 +236,31 @@ export default {
                 var sum = 0;
                 var item = list[i];
                 for (var j = 1; j <= 4; j++) {
-                    sum += Number(this.charts.all[j]);
+                    sum += Number(this.charts[item][j]);
                 }
                 totals[item] = sum;
             }
             return totals;
         },
+        chartsData : function () {
+            var list = this.list;
+            var result = {};
+            for (var i = 0; i < list.length; i++) {
+                var item = list[i];
+                var chartData = {};
+                var dataSets = {};
+                chartData.labels = ['خالی', 'خاموش', 'درحال‌پخت', 'پخته‌شده'];
+                dataSets.backgroundColor = ['gray', 'brown', 'orange', 'green'];
+                dataSets.data = [];
+                for (var n = 1; n <= 4; n++) {
+                    dataSets.data.push(this.charts[item][n]);
+                }
+                chartData.datasets = [dataSets];
+                result[item] = chartData;
+            }
+            console.log(result);
+            return result;
+        }
     },
     methods : {
         createArray : function (min, max) {
@@ -290,11 +323,39 @@ export default {
     flex-direction: column-reverse;
 }
 
-.overview progress {
+.overview .progress-bar {
     display: block;
     width: 100%;
-    height: 24px;
+    height: 20px;
     margin: 8px 0;
+    background-color: #f0f0f0;
+    border-radius: 99px;
+}
+
+.overview .progress-bar .progress {
+    border-radius: 99px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.overview .progress-bar.stat-1 .progress {
+    background-color: gray;
+}
+
+.overview .progress-bar.stat-2 .progress {
+    background-color: brown;
+}
+
+.overview .progress-bar.stat-3 .progress {
+    background-color: orange;
+}
+
+.overview .progress-bar.stat-4 .progress {
+    background-color: green;
 }
 
 .overview .devider {
@@ -304,20 +365,8 @@ export default {
     margin: 8px 0;
 }
 
-.overview progress.stat-1 {
-    accent-color: gray;
-}
-
-.overview progress.stat-2 {
-    accent-color: brown;
-}
-
-.overview progress.stat-3 {
-    accent-color: orange;
-}
-
-.overview progress.stat-4 {
-    accent-color: green;
+.pie-chart-container {
+    display: flex;
 }
 
 .view-mounth p {
