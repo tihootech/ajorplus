@@ -190,4 +190,12 @@ export default {
 }
 
 
+
+@media only screen and (max-width: 760px) {
+    .btn {
+        font-size: 14px;
+    }
+}
+
+
 </style>

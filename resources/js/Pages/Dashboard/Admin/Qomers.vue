@@ -12,7 +12,7 @@
         </div>
 
         <div v-if="from == 'home'" class="section">
-            <div v-for="item in list" :id="`section-${item}`">
+            <div v-for="item in list" class="forge-wrapper" :id="`section-${item}`">
                 <div class="overview">
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت هر دهانه <span v-if="item != 'all'"> قیمر {{item}} </span> </h3>
@@ -49,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="item != 'all'" class="forge-space"></div>
                 <div v-if="item != 'all'" class="forges">
                     <span class="forge-arrow"></span>
                     <div class="forge-parts">
@@ -60,7 +61,7 @@
                                 <b class="forge-number"> {{faNumber(n)}} </b>
                             </span>
                         </div>
-                        <p class="forge-label">{{item}}</p>
+                        <p class="forge-label"> <span>{{item}}</span> </p>
                         <div class="forge-part">
                             <span v-for="n in forgeList[item].part2" class="forge-square" :style="`--w:${100/forgeList[item].part1.length}%;--bg:${forges[item][n-1].color}`"
                             @click="openModal(forges[item][n-1])">
@@ -77,7 +78,8 @@
         </div>
 
         <div v-else class="forges-container">
-            <div v-for="mounths, symbol in forges">
+            <div v-for="mounths, symbol in forges" class="forge-wrapper forge-wrapper-qomers">
+                <div class="forge-space-qomers"></div>
                 <div class="forges">
                     <span class="forge-arrow"></span>
                     <div class="forge-parts">
@@ -89,7 +91,7 @@
                                 <b class="forge-number"> {{faNumber(n)}} </b>
                             </span>
                         </div>
-                        <p class="forge-label">{{symbol}}</p>
+                        <p class="forge-label"> <span>{{symbol}}</span> </p>
                         <div class="forge-part">
                             <span v-for="n in forgeList[symbol].part2" class="forge-square" :style="`--w:${100/forgeList[symbol].part1.length}%;--bg:${mounths[n-1].color}`"
                             @click="openModal(mounths[n-1])">
@@ -384,59 +386,61 @@ export default {
 ============ *** FORGE SHAPES *** ================
 ============================================= ***/
 
-@media only screen and (min-width: 1080px) {
-    .forges {
-        margin: 32px;
-        background-color: #013838;
-        color: #fff;
-        position: relative;
-        padding: 1.5rem 5rem;
-        border-radius: 9999px;
-        border: 2px solid #0AD4D4;
-    }
+.forge-wrapper {
+    position: relative;
+}
 
-    .forges > .forge-parts {
-        display: flex;
-        flex-direction: column;
-    }
+.forges {
+    margin: 32px;
+    background-color: #013838;
+    color: #fff;
+    position: relative;
+    padding: 1.5rem 5rem;
+    border-radius: 9999px;
+    border: 2px solid #0AD4D4;
+}
 
-    .forges > .forge-parts > .forge-label {
-        display: flex;
-        justify-content: center;
-        border: 2px solid #0AD4D4;
-        border-radius: 99px;
-        font-size: 1.25rem;
-        font-weight: bold;
-        padding: 4px 0;
-    }
+.forges > .forge-parts {
+    display: flex;
+    flex-direction: column;
+}
 
-    .forges > .forge-parts > .forge-part {
-        display: flex;
-        margin: 0 24px;
-    }
+.forges > .forge-parts > .forge-label {
+    display: flex;
+    justify-content: center;
+    border: 2px solid #0AD4D4;
+    border-radius: 99px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 4px 0;
+}
 
-    .forges > .forge-parts > .forge-part > .forge-square {
-        width: var(--w);
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-left: 2px solid #0AD4D4;
-        cursor: pointer;
-        background-color: var(--bg);
-        transition: .2s;
-        position: relative;
-    }
+.forges > .forge-parts > .forge-part {
+    display: flex;
+    margin: 0 24px;
+}
 
-    .forges > .forge-parts > .forge-part > .forge-square:hover {
-        transform: scale(1.25);
-        border: 2px solid #0AD4D4;
-        z-index: 5;
-    }
+.forges > .forge-parts > .forge-part > .forge-square {
+    width: var(--w);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid #0AD4D4;
+    cursor: pointer;
+    background-color: var(--bg);
+    transition: .2s;
+    position: relative;
+}
 
-    .forges > .forge-parts > .forge-part > .forge-square:first-child {
-        border-right: 2px solid #0AD4D4;
-    }
+.forges > .forge-parts > .forge-part > .forge-square:hover {
+    transform: scale(1.25);
+    border: 2px solid #0AD4D4;
+    z-index: 5;
+}
+
+.forges > .forge-parts > .forge-part > .forge-square:first-child {
+    border-right: 2px solid #0AD4D4;
 }
 
 .forges > .forge-parts > .forge-part > .forge-square > i {
@@ -458,62 +462,60 @@ export default {
 ============ *** FORGE ARROWS *** ==============
 ============================================= ***/
 
-@media only screen and (min-width: 1080px) {
-    .forge-arrow {
-        position: absolute;
-        top: 2.5rem;
-        width: 6rem;
-        height: 6rem;
-        border-radius: 15rem;
-    }
+.forge-arrow {
+    position: absolute;
+    top: 2.5rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 15rem;
+}
 
-    .forge-arrow::after {
-        content: '';
-        position: absolute;
-        width: 1rem;
-        transform: rotate( 20deg);
-        background-color: #fff;
-        height: .1rem;
-    }
+.forge-arrow::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    transform: rotate( 20deg);
+    background-color: #fff;
+    height: .1rem;
+}
 
-    .forge-arrow::before {
-        content: '';
-        position: absolute;
-        width: 1rem;
-        height: .1rem;
-        transform: rotate(-50deg);
-        background-color: #fff;
-    }
+.forge-arrow::before {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: .1rem;
+    transform: rotate(-50deg);
+    background-color: #fff;
+}
 
-    .forge-arrow:nth-of-type(1) {
-        right: 1.75rem;
-        border-right: 2px solid #fff;
-    }
+.forge-arrow:nth-of-type(1) {
+    right: 1.75rem;
+    border-right: 2px solid #fff;
+}
 
-    .forge-arrow:nth-of-type(1)::after {
-        right: 1.5rem;
-        bottom: -.2rem;
-    }
+.forge-arrow:nth-of-type(1)::after {
+    right: 1.5rem;
+    bottom: -.2rem;
+}
 
-    .forge-arrow:nth-of-type(1)::before {
-        bottom: .4rem;
-        right: 1.6rem;
-    }
+.forge-arrow:nth-of-type(1)::before {
+    bottom: .4rem;
+    right: 1.6rem;
+}
 
-    .forge-arrow:nth-of-type(2) {
-        left: 1.75rem;
-        border-left: 2px solid #fff;
-    }
+.forge-arrow:nth-of-type(2) {
+    left: 1.75rem;
+    border-left: 2px solid #fff;
+}
 
-    .forge-arrow:nth-of-type(2)::after {
-        left: 1.5rem;
-        top: -.2rem;
-    }
+.forge-arrow:nth-of-type(2)::after {
+    left: 1.5rem;
+    top: -.2rem;
+}
 
-    .forge-arrow:nth-of-type(2)::before {
-        left: 1.6rem;
-        top: .4rem;
-    }
+.forge-arrow:nth-of-type(2)::before {
+    left: 1.6rem;
+    top: .4rem;
 }
 
 /*** =============================================
@@ -595,32 +597,60 @@ export default {
     .overview > .tile {
         width: 100% !important;
     }
-    .forges > .forge-arrow {
-        display: none;
+    .forges {
+        transform: rotate(90deg);
+        width: 1000px;
+        margin: 500px 0;
+        position: absolute;
+        right: -200px;
+        top: 1150px;
     }
-    .forges > .forge-parts {
-        display: flex;
-        flex-direction: column;
+    .forges > .forge-parts > .forge-label > span {
+        transform: rotate(-90deg);
     }
     .forges > .forge-parts > .forge-part {
-        order: 2;
+        height: 67px;
+        align-items: stretch;
     }
-    .forges > .forge-parts > .forge-label {
-        order: 1;
-        font-size: 1.5rem;
-        font-weight: bold;
+    .forges > .forge-parts > .forge-part:first-child {
+        flex-direction: row-reverse;
+
     }
-    .forges > .forge-parts > .forge-part > .forge-square {
-        position: relative;
-        background-color: var(--bg);
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 48px;
-        height: 48px;
-        /* border: 2px solid var(--primary); */
-        color: var(--dashboard-light);
-        margin: 4px;
+    .forges > .forge-parts > .forge-part > .forge-square > i, .forges > .forge-parts > .forge-part > .forge-square > b {
+        transform: rotate(-90deg);
+    }
+    .forges > .forge-parts > .forge-part > .forge-square:hover {
+        transform: rotate(-90deg) scale(1.25);
+    }
+    .forge-arrow {
+        top: 3.5rem;
+    }
+    .forge-space {
+        height: 1150px;
+    }
+    .forge-wrapper:not(:first-child) > .forge-space-qomers {
+        height: 1150px;
+    }
+    .forge-wrapper-qomers.forge-wrapper:first-child .forges {
+        top: 0;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .forges {
+        right: -250px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .forges {
+        right: -300px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .forges {
+        right: -350px;
     }
 }
 

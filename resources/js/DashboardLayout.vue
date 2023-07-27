@@ -175,10 +175,11 @@
     align-self: flex-start;
     z-index: 10;
     background-color: var(--dashboard-dark);
-    color: var(--primary);
-    font-size: 2.5rem;
-    width: 67px;
-    height: 67px;
+    color: var(--dashboard-light);
+    border: 2px solid var(--dashboard-light);
+    font-size: 1.75rem;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 
