@@ -54,7 +54,7 @@
                     <div class="forge-parts">
                         <div class="forge-part">
                             <span v-for="n in forgeList[item].part1" class="forge-square" :style="`--w:${100/forgeList[item].part1.length}%;--bg:${forges[item][n-1].color}`"
-                            @click="openModal(forges[item][n-1])">
+                            @click="openModal(forges[item], n-1)">
                                 <i v-if="forges[item][n-1].fire" class="bi bi-fire fire"></i>
                                 <i v-if="forges[item][n-1].mark" class="bi bi-star-fill mark"></i>
                                 <b class="forge-number"> {{faNumber(n)}} </b>
@@ -63,7 +63,7 @@
                         <p class="forge-label"> <span>{{item}}</span> </p>
                         <div class="forge-part">
                             <span v-for="n in forgeList[item].part2" class="forge-square" :style="`--w:${100/forgeList[item].part1.length}%;--bg:${forges[item][n-1].color}`"
-                            @click="openModal(forges[item][n-1])">
+                            @click="openModal(forges[item], n-1)">
                                 <i v-if="false" class="bi bi-fire"></i>
                                 <i v-if="false" class="bi bi-mark"></i>
                                 <b class="forge-number"> {{faNumber(n)}} </b>
@@ -83,7 +83,7 @@
                     <div class="forge-parts">
                         <div class="forge-part">
                             <span v-for="n in forgeList[symbol].part1" class="forge-square" :style="`--w:${100/forgeList[symbol].part1.length}%;--bg:${mounths[n-1].color}`"
-                            @click="openModal(mounths[n-1])">
+                            @click="openModal(mounths, n-1)">
                                 <i v-if="mounths[n-1].fire" class="bi bi-fire fire"></i>
                                 <i v-if="mounths[n-1].mark" class="bi bi-star-fill mark"></i>
                                 <b class="forge-number"> {{faNumber(n)}} </b>
@@ -206,6 +206,8 @@ export default {
         return {
             user : this.$page.props.user,
             currentMounth : null,
+            currentList : [],
+            currentIndex : -1,
             saving : false,
             list : [],
             chartOptions: {
@@ -271,7 +273,10 @@ export default {
         middle : function (n) {
             return n%2 == 0 ? (n/2) : (n-1)/2;
         },
-        openModal : function (mounth) {
+        openModal : function (targetList, targetIndex) {
+            var mounth = targetList[targetIndex];
+            this.currentList = targetList;
+            this.currentIndex = targetIndex;
             this.currentMounth = mounth;
         },
         updateMounth : function () {
@@ -280,7 +285,9 @@ export default {
             axios.put(url, this.currentMounth).then(res => {
                 if (res.data.success) {
                     this.swalSuccess();
+                    this.currentList[this.currentIndex] = res.data.mounth;
                     this.currentMounth = null;
+                    console.log(res.data.mounth);
                 }else {
                     this.swalError(res.data.message);
                 }
