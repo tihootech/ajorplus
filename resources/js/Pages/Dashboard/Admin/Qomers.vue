@@ -12,7 +12,7 @@
         </div>
 
         <div v-if="from == 'home'" class="section">
-            <div v-for="item in list" class="forge-wrapper" :id="`section-${item}`">
+            <div v-for="item in list" :id="`section-${item}`">
                 <div class="overview">
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت هر دهانه <span v-if="item != 'all'"> قیمر {{item}} </span> </h3>
@@ -49,7 +49,6 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="item != 'all'" class="forge-space"></div>
                 <div v-if="item != 'all'" class="forges">
                     <span class="forge-arrow"></span>
                     <div class="forge-parts">
@@ -78,9 +77,8 @@
         </div>
 
         <div v-else class="forges-container">
-            <div v-for="mounths, symbol in forges" class="forge-wrapper forge-wrapper-qomers">
-                <div class="forge-space-qomers"></div>
-                <div class="forges">
+            <div v-for="mounths, symbol in forges">
+                <div class="forges qomer-forges">
                     <span class="forge-arrow"></span>
                     <div class="forge-parts">
                         <div class="forge-part">
@@ -386,10 +384,6 @@ export default {
 ============ *** FORGE SHAPES *** ================
 ============================================= ***/
 
-.forge-wrapper {
-    position: relative;
-}
-
 .forges {
     margin: 32px;
     background-color: #013838;
@@ -597,60 +591,25 @@ export default {
     .overview > .tile {
         width: 100% !important;
     }
+
     .forges {
-        transform: rotate(90deg);
-        width: 1000px;
-        margin: 500px 0;
-        position: absolute;
-        right: -200px;
-        top: 1150px;
+        margin: 110vw 0;
+        transform: rotate(90deg) translateY(-50vw);
+        width: 225vw;
+        position: relative;
+        left: 25vw;
     }
-    .forges > .forge-parts > .forge-label > span {
+
+    .forges.qomer-forges {
+        width: 250vw;
+    }
+
+    .forges > .forge-parts > .forge-part > .forge-square > b, .forges > .forge-parts > .forge-part > .forge-square > i, .forges > .forge-parts > .forge-label > span {
         transform: rotate(-90deg);
     }
-    .forges > .forge-parts > .forge-part {
-        height: 67px;
-        align-items: stretch;
-    }
+
     .forges > .forge-parts > .forge-part:first-child {
         flex-direction: row-reverse;
-
-    }
-    .forges > .forge-parts > .forge-part > .forge-square > i, .forges > .forge-parts > .forge-part > .forge-square > b {
-        transform: rotate(-90deg);
-    }
-    .forges > .forge-parts > .forge-part > .forge-square:hover {
-        transform: rotate(-90deg) scale(1.25);
-    }
-    .forge-arrow {
-        top: 3.5rem;
-    }
-    .forge-space {
-        height: 1150px;
-    }
-    .forge-wrapper:not(:first-child) > .forge-space-qomers {
-        height: 1150px;
-    }
-    .forge-wrapper-qomers.forge-wrapper:first-child .forges {
-        top: 0;
-    }
-}
-
-@media only screen and (max-width: 560px) {
-    .forges {
-        right: -250px;
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    .forges {
-        right: -300px;
-    }
-}
-
-@media only screen and (max-width: 340px) {
-    .forges {
-        right: -350px;
     }
 }
 
