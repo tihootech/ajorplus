@@ -162,7 +162,7 @@
                         </div>
                         <div class="input-group">
                             <Btn icon="check-circle-fill" :loading="saving" type="submit" block>
-                                تایید و ذخیره
+                                تایید
                             </Btn>
                         </div>
                     </form>
