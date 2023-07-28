@@ -104,7 +104,7 @@
                         <p class="forge-label"> <span>{{symbol}}</span> </p>
                         <div class="forge-part">
                             <span v-for="n in forgeList[symbol].part2" class="forge-square" :style="`--w:${100/forgeList[symbol].part1.length}%;--bg:${mounths[n-1].color}`"
-                            @click="openModal(mounths[n-1])">
+                            @click="openModal(mounths, n-1)">
                                 <i v-if="false" class="bi bi-fire"></i>
                                 <i v-if="false" class="bi bi-mark"></i>
                                 <b class="forge-number"> {{faNumber(n)}} </b>
