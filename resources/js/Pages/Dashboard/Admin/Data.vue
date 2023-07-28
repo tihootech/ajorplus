@@ -99,7 +99,7 @@
                     <form v-if="currentMounth" class="mounth-form" @submit.prevent="saveMounth">
                         <div class="input-group">
                             <label class="label"> آجر </label>
-                            <select class="input" v-model="currentMounth.brick">
+                            <select class="input" v-model="currentMounth.brick" @change="autoSelectCapacity">
                                 <option value="T8"> تیغه ۸ </option>
                                 <option value="T10"> تیغه ۱۰ </option>
                                 <option value="T12"> تیغه ۱۲ </option>
@@ -215,18 +215,19 @@ export default {
         }
     },
     methods : {
-        autoSelectCapacity : function (mounth) {
-            if(mounth.brick == 'T8' ) mounth.capacity = 13000;
-            if(mounth.brick == 'T10 ') mounth.capacity = 12000;
-            if(mounth.brick == 'T12 ') mounth.capacity = 8500;
-            if(mounth.brick == 'T15 ') mounth.capacity = 8000;
-            if(mounth.brick == 'FB' ) mounth.capacity = 4000;
-            if(mounth.brick == 'FS' ) mounth.capacity = 8000;
-            if(mounth.brick == 'LS' ) mounth.capacity = 26000;
-            if(mounth.brick == 'L5' ) mounth.capacity = 18000;
-            if(mounth.brick == 'L55 ') mounth.capacity = 18000;
-            if(mounth.brick == 'S25 ') mounth.capacity = 1800;
-            if(mounth.brick == 'S30 ') mounth.capacity = 1400;
+        autoSelectCapacity : function () {
+            this.currentMounth.quantity = null;
+            if( this.currentMounth.brick == 'T8' ) this.currentMounth.quantity = 13000;
+            if( this.currentMounth.brick == 'T10') this.currentMounth.quantity = 12000;
+            if( this.currentMounth.brick == 'T12') this.currentMounth.quantity = 8500;
+            if( this.currentMounth.brick == 'T15') this.currentMounth.quantity = 8000;
+            if( this.currentMounth.brick == 'FB' ) this.currentMounth.quantity = 4000;
+            if( this.currentMounth.brick == 'FS' ) this.currentMounth.quantity = 8000;
+            if( this.currentMounth.brick == 'LS' ) this.currentMounth.quantity = 26000;
+            if( this.currentMounth.brick == 'L5' ) this.currentMounth.quantity = 18000;
+            if( this.currentMounth.brick == 'L55') this.currentMounth.quantity = 18000;
+            if( this.currentMounth.brick == 'S25') this.currentMounth.quantity = 1800;
+            if( this.currentMounth.brick == 'S30') this.currentMounth.quantity = 1400;
         },
         createMounth : function () {
             this.currentMounth = {id : 0};

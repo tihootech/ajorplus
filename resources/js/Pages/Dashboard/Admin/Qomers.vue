@@ -300,7 +300,6 @@ export default {
             if( this.currentMounth.brick == 'L55') this.currentMounth.quantity = 18000;
             if( this.currentMounth.brick == 'S25') this.currentMounth.quantity = 1800;
             if( this.currentMounth.brick == 'S30') this.currentMounth.quantity = 1400;
-            console.log(this.currentMounth.brick, this.currentMounth.quantity);
         },
         createArray : function (min, max) {
             max++;
