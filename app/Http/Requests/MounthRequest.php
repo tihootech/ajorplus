@@ -24,7 +24,7 @@ class MounthRequest extends FormRequest
         return [
             'symbol' => 'required|in:A,B,C,D,E',
             'name' => 'required|string',
-            'quantity' => 'required|string',
+            'quantity' => 'required',
             'state' => 'required|integer|between:1,4',
             'brick' => 'required|string',
             'mark' => 'nullable|boolean',
