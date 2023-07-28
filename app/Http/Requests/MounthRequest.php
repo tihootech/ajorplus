@@ -22,7 +22,7 @@ class MounthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'symbol' => 'required|in:FA,FB,FC,FD,FE',
+            'symbol' => 'required|in:A,B,C,D,E',
             'name' => 'required|string',
             'quantity' => 'required|string',
             'state' => 'required|integer|between:1,4',

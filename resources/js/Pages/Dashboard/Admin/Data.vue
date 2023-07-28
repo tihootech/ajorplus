@@ -100,9 +100,19 @@
                         <div class="input-group">
                             <label class="label"> آجر </label>
                             <select class="input" v-model="currentMounth.brick">
-                                <option value="3.6">3.6</option>
-                                <option value="5.6">5.6</option>
-                                <option value="L">لیفتون</option>
+                                <option value="T8"> تیغه ۸ </option>
+                                <option value="T10"> تیغه ۱۰ </option>
+                                <option value="T12"> تیغه ۱۲ </option>
+                                <option value="T15"> تیغه ۱۵ </option>
+                                <option value="FB"> فومدار بزرگ </option>
+                                <option value="FS"> فومدار کوچک </option>
+                                <option value="LS"> لیفتون قالب کوچک </option>
+                                <option value="L5"> لیفتون ۵cm </option>
+                                <option value="L55"> لیفتون ۵/۵cm </option>
+                                <option value="LI"> لیفتون عراقی </option>
+                                <option value="S25"> سقفی 25 </option>
+                                <option value="S30"> سقفی 30 </option>
+                                <option value="ETC"> متفرقه </option>
                             </select>
                         </div>
                         <div class="input-group">
@@ -116,11 +126,11 @@
                         <div class="input-group">
                             <label class="label"> نماد </label>
                             <select class="input" v-model="currentMounth.symbol">
-                                <option>FA</option>
-                                <option>FB</option>
-                                <option>FC</option>
-                                <option>FD</option>
-                                <option>FE</option>
+                                <option>A</option>
+                                <option>B</option>
+                                <option>C</option>
+                                <option>D</option>
+                                <option>E</option>
                             </select>
                         </div>
                         <div class="input-group">
@@ -205,6 +215,19 @@ export default {
         }
     },
     methods : {
+        autoSelectCapacity : function (mounth) {
+            if(mounth.brick == 'T8' ) mounth.capacity = 13000;
+            if(mounth.brick == 'T10 ') mounth.capacity = 12000;
+            if(mounth.brick == 'T12 ') mounth.capacity = 8500;
+            if(mounth.brick == 'T15 ') mounth.capacity = 8000;
+            if(mounth.brick == 'FB' ) mounth.capacity = 4000;
+            if(mounth.brick == 'FS' ) mounth.capacity = 8000;
+            if(mounth.brick == 'LS' ) mounth.capacity = 26000;
+            if(mounth.brick == 'L5' ) mounth.capacity = 18000;
+            if(mounth.brick == 'L55 ') mounth.capacity = 18000;
+            if(mounth.brick == 'S25 ') mounth.capacity = 1800;
+            if(mounth.brick == 'S30 ') mounth.capacity = 1400;
+        },
         createMounth : function () {
             this.currentMounth = {id : 0};
             this.modalIsOpen = true;

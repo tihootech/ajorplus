@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
     public function homeAndQomers($from)
     {
-        $symbols = ['FA', 'FB', 'FC', 'FD', 'FE'];
+        $symbols = ['A', 'B', 'C', 'D', 'E'];
         foreach ($symbols as $symbol) {
             $forges[$symbol] = Mounth::whereSymbol($symbol)->orderBy('num')->get();
         }

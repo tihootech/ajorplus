@@ -6,7 +6,7 @@
         <button type="button" class="hamburger-toggler" @click="asideOpen = true">
             <i class="bi bi-list"></i>
         </button>
-        <aside :class={open:asideOpen}>
+        <aside :class="{open:asideOpen}">
             <div class="dashboard-logo">
                 <img class="logo-img" src="../images/logo.png" alt="AJOR-PLUS">
             </div>
@@ -17,7 +17,7 @@
                 </Link>
                 <Link :href="route('dashboard.qomers')" class="nav-link" :class="{active:route().current() == 'dashboard.qomers'}">
                     <i class="bi bi-fire"></i>
-                    قیمرها
+                    قمیرها
                 </Link>
                 <Link v-if="user.role == 'admin'" :href="route('dashboard.users')" class="nav-link" :class="{active:route().current() == 'dashboard.users'}">
                     <i class="bi bi-person-fill"></i>
@@ -85,6 +85,11 @@
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+.dashboard-logo .logo-img {
+    width: 225px;
+    height: 225px;
 }
 
 .dashboard-area > aside > .logout-section {
@@ -169,6 +174,7 @@
 }
 
 .hamburger-toggler {
+    visibility: hidden;
     position: absolute;
     top: 90px;
     right: 10px;
@@ -189,6 +195,9 @@
 }
 
 @media only screen and (max-width: 1080px) {
+    .hamburger-toggler {
+        visibility: visible;
+    }
     .dashboard-area > main {
         width: 75%;
     }

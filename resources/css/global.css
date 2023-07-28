@@ -19,15 +19,18 @@
 :root {
 
     /* primary color */
-    --primary : #F24405;
-    --primary-lighten-1 : #fa6630;
-    --primary-lighten-2 : #fb8c64;
-    --primary-lighten-3 : #fcb297;
-    --primary-lighten-4 : #fdd8cb;
-    --primary-darken-1 : #c13604;
-    --primary-darken-2 : #912803;
-    --primary-darken-3 : #601b02;
-    --primary-darken-4 : #300d01;
+    --primary : #E6A563;
+    --primary-lighten-1 : #ebb782;
+    --primary-lighten-2 : #f0c9a1;
+    --primary-lighten-3 : #f5dbc0;
+    --primary-lighten-4 : #faecdf;
+    --primary-darken-1 : #dc842a;
+    --primary-darken-2 : #aa631b;
+    --primary-darken-3 : #714212;
+    --primary-darken-4 : #382109;
+
+    --secondary : #71BBCF;
+    --tertiary : #313234;
 
     --dashboard-light : #eff6ee;
     --dashboard-gray : #9197ae;

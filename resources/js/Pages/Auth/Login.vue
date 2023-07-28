@@ -100,6 +100,10 @@ export default {
     color: var(--primary-darken-2);
 }
 
+.logo-img {
+    width: 250px;
+    height: 250px;
+}
 
 @media only screen and (max-width: 600px) {
     .container > .card {
