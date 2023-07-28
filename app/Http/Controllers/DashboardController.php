@@ -28,7 +28,11 @@ class DashboardController extends Controller
 
         $charts = [];
         $counts = [];
-        $bricks = ['3.6', '5.6', 'L'];
+        $bricks = [
+            'T8', 'T10', 'T12', 'T15',
+            'FB', 'FS', 'LS', 'L5','L55',
+            'LI', 'S25', 'S30', 'ETC',
+        ];
         if ($from == 'home') {
             for ($n=1; $n <= 4 ; $n++) {
                 $charts['all'][$n] = Mounth::where('state', $n)->count();

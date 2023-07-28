@@ -40,12 +40,24 @@
                     </div>
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت قالب‌ها </h3>
-                        <div>
-                            <span> آجر 3.6 </span> <i class="bi bi-arrow-left text-primary bigger"></i> <b>{{counts[item]['3.6']}}</b>
-                            <hr class="devider">
-                            <span> 5.6 آجر </span> <i class="bi bi-arrow-left text-primary bigger"></i> <b>{{counts[item]['5.6']}}</b>
-                            <hr class="devider">
-                            <span> لیفتون </span> <i class="bi bi-arrow-left text-primary bigger"></i> <b>{{counts[item]['L']}}</b>
+                        <div class="brick-results">
+                            <div v-for="b, i in bricks" class="brick-result">
+                                <span v-if="b == 'T8'"> تیغه ۸ </span>
+                                <span v-if="b == 'T10'"> تیغه ۱۰ </span>
+                                <span v-if="b == 'T12'"> تیغه ۱۲ </span>
+                                <span v-if="b == 'T15'"> تیغه ۱۵ </span>
+                                <span v-if="b == 'FB'"> فومدار بزرگ </span>
+                                <span v-if="b == 'FS'"> فومدار کوچک </span>
+                                <span v-if="b == 'LS'"> لیفتون قالب کوچک </span>
+                                <span v-if="b == 'L5'"> لیفتون ۵ </span>
+                                <span v-if="b == 'L55'"> لیفتون ۵/۵ </span>
+                                <span v-if="b == 'LI'"> لیفتون عراقی </span>
+                                <span v-if="b == 'S25'"> سقفی 25 </span>
+                                <span v-if="b == 'S30'"> سقفی 30 </span>
+                                <span v-if="b == 'ETC'"> متفرقه </span>
+                                <i class="bi bi-arrow-left text-primary bigger"></i>
+                                <b>{{counts[item][b]}}</b>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -342,11 +354,11 @@ export default {
 }
 
 .overview > .tile:nth-child(2) {
-    width: 45%;
+    width: 42%;
 }
 
 .overview > .tile:nth-child(3) {
-    width: 20%;
+    width: 25%;
 }
 
 .overview .mounth-stats {
@@ -408,6 +420,32 @@ export default {
     font-size: 2rem;
     margin: 0 8px;
     color: var(--primary);
+}
+
+
+.brick-results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.brick-results .brick-result {
+    width: 50%;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.brick-results .brick-result:not(:last-child) {
+    border-bottom: 3px solid var(--primary);
+}
+
+.brick-results .brick-result:nth-child(even) {
+    text-align: left;
+}
+
+.brick-results .brick-result i {
+    margin: 0 4px;
+    position: relative;
+    top: 2px;
 }
 
 /*** =============================================
