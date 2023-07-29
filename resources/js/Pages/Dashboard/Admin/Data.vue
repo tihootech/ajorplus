@@ -65,23 +65,25 @@
                     </thead>
                     <tbody>
                         <tr v-for="mounth, i in list">
-                            <th> {{i+1}} </th>
-                            <td>
-                                {{mounth.symbol_name}}
-                                <i v-if="mounth.fire" class="bi bi-fire bigger text-primary mx-1"></i>
-                                <i v-if="mounth.mark" class="bi bi-star-fill bigger text-primary mx-1"></i>
-                            </td>
-                            <td :class="{'with-info':filters.descriptions}">
-                                <span> {{mounth.name}} </span>
-                                <p class="mounth-discription"> {{mounth.discription}} </p>
-                            </td>
-                            <td> {{mounth.quantity}} </td>
-                            <td> {{mounth.brick_name}} </td>
-                            <td> <span class="badge" :style="`--bg:${mounth.color}`"> {{mounth.persian_state}} </span> </td>
-                            <td>
-                                <Btn class="action" theme="success" @click="editMounth(i)"> <i class="bi bi-pencil-fill"></i> </Btn>
-                                <Btn class="action" theme="warning" @click="destroyMounth(i)"> <i class="bi bi-trash-fill"></i> </Btn>
-                            </td>
+                            <!-- <template v-if="mounth.id"> -->
+                                <th> {{i+1}} </th>
+                                <td>
+                                    {{mounth.symbol_name}}
+                                    <i v-if="mounth.fire" class="bi bi-fire bigger text-primary mx-1"></i>
+                                    <i v-if="mounth.mark" class="bi bi-star-fill bigger text-primary mx-1"></i>
+                                </td>
+                                <td :class="{'with-info':filters.descriptions}">
+                                    <span> {{mounth.name}} </span>
+                                    <p class="mounth-discription"> {{mounth.discription}} </p>
+                                </td>
+                                <td> {{mounth.quantity}} </td>
+                                <td> {{mounth.brick_name}} </td>
+                                <td> <span class="badge" :style="`--bg:${mounth.color}`"> {{mounth.persian_state}} </span> </td>
+                                <td>
+                                    <Btn class="action" theme="success" @click="editMounth(i)"> <i class="bi bi-pencil-fill"></i> </Btn>
+                                    <Btn class="action" theme="warning" @click="destroyMounth(i)"> <i class="bi bi-trash-fill"></i> </Btn>
+                                </td>
+                            <!-- </template> -->
                         </tr>
                     </tbody>
                 </table>
@@ -91,80 +93,7 @@
             </div>
         </div>
 
-
-        <Transition name="bounce">
-            <div v-if="modalIsOpen" class="modal">
-                <div class="modal-content">
-                    <span class="close" @click="modalIsOpen=false">&times;</span>
-                    <form v-if="currentMounth" class="mounth-form" @submit.prevent="saveMounth">
-                        <div class="input-group">
-                            <label class="label"> آجر </label>
-                            <select class="input" v-model="currentMounth.brick" @change="autoSelectCapacity">
-                                <option value="T8"> تیغه ۸ </option>
-                                <option value="T10"> تیغه ۱۰ </option>
-                                <option value="T12"> تیغه ۱۲ </option>
-                                <option value="T15"> تیغه ۱۵ </option>
-                                <option value="FB"> فومدار بزرگ </option>
-                                <option value="FS"> فومدار کوچک </option>
-                                <option value="LS"> لیفتون قالب کوچک </option>
-                                <option value="L5"> لیفتون ۵cm </option>
-                                <option value="L55"> لیفتون ۵/۵cm </option>
-                                <option value="LI"> لیفتون عراقی </option>
-                                <option value="S25"> سقفی 25 </option>
-                                <option value="S30"> سقفی 30 </option>
-                                <option value="ETC"> متفرقه </option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> نام </label>
-                            <input required type="text" class="input" v-model="currentMounth.name">
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> ظرفیت </label>
-                            <input required type="text" class="input" v-model="currentMounth.quantity">
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> نماد </label>
-                            <select class="input" v-model="currentMounth.symbol">
-                                <option>A</option>
-                                <option>B</option>
-                                <option>C</option>
-                                <option>D</option>
-                                <option>E</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> وضعیت </label>
-                            <select class="input" v-model="currentMounth.state">
-                                <option value="1"> خالی </option>
-                                <option value="2"> خاموش </option>
-                                <option value="3"> درحال‌پخت </option>
-                                <option value="4"> پخته‌شده </option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> توضیحات </label>
-                            <textarea v-model="currentMounth.discription" class="input" rows="6"></textarea>
-                        </div>
-                        <div class="input-group booleans">
-                            <i class="bi bi-fire bool-icon" @click="currentMounth.fire = !currentMounth.fire">
-                                <i v-show="currentMounth.fire" class="bi bi-check-circle-fill">
-                            </i>
-                            </i>
-                            <i class="bi bi-star-fill bool-icon" @click="currentMounth.mark = !currentMounth.mark">
-                                <i v-show="currentMounth.mark" class="bi bi-check-circle-fill">
-                            </i>
-                        </i>
-                        </div>
-                        <div class="input-group">
-                            <Btn icon="check-circle-fill" :loading="saving" type="submit" block>
-                                تایید
-                            </Btn>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </Transition>
+        <MounthModal :list="mounths" :index="currentIndex" @close="closeModal" />
 
     </dashboard-layout>
 </template>
@@ -173,16 +102,15 @@
 
 import { defineComponent } from 'vue';
 import DashboardLayout from '@/DashboardLayout.vue';
+import MounthModal from './Fragments/MounthModal.vue';
 
 export default {
-    components: { DashboardLayout },
+    components: { DashboardLayout, MounthModal },
     props : ['mounths'],
     data : function () {
         return {
             saving : false,
-            currentMounth : null,
             currentIndex : -1,
-            modalIsOpen : false,
             filters : {phrase : '', state : '', order : 'num', fire:false, mark:false, descriptions : true},
         }
     },
@@ -215,49 +143,22 @@ export default {
         }
     },
     methods : {
-        autoSelectCapacity : function () {
-            this.currentMounth.quantity = null;
-            if( this.currentMounth.brick == 'T8' ) this.currentMounth.quantity = 13000;
-            if( this.currentMounth.brick == 'T10') this.currentMounth.quantity = 12000;
-            if( this.currentMounth.brick == 'T12') this.currentMounth.quantity = 8500;
-            if( this.currentMounth.brick == 'T15') this.currentMounth.quantity = 8000;
-            if( this.currentMounth.brick == 'FB' ) this.currentMounth.quantity = 4000;
-            if( this.currentMounth.brick == 'FS' ) this.currentMounth.quantity = 8000;
-            if( this.currentMounth.brick == 'LS' ) this.currentMounth.quantity = 26000;
-            if( this.currentMounth.brick == 'L5' ) this.currentMounth.quantity = 18000;
-            if( this.currentMounth.brick == 'L55') this.currentMounth.quantity = 18000;
-            if( this.currentMounth.brick == 'S25') this.currentMounth.quantity = 1800;
-            if( this.currentMounth.brick == 'S30') this.currentMounth.quantity = 1400;
-        },
         createMounth : function () {
-            this.currentMounth = {id : 0};
-            this.modalIsOpen = true;
+            this.mounths.unshift({id:0});
+            this.currentIndex = 0;
         },
         editMounth : function (index) {
-            this.currentMounth = this.mounths[index];
             this.currentIndex = index;
-            this.modalIsOpen = true;
         },
-        saveMounth : function () {
-            this.saving = true;
-            var url = this.currentMounth.id ? route('mounth.update', this.currentMounth) : route('mounth.store');
-            var method = this.currentMounth.id ? 'put' : 'post';
-            var data = this.currentMounth;
-            axios({url, method, data}).then(res => {
-                if (res.data.success) {
-                    this.swalSuccess();
-                    if (!this.currentMounth.id) {
-                        this.mounths.unshift(res.data.mounth);
-                    }else {
-                        this.mounths[this.currentIndex] = res.data.mounth;
-                        this.currentIndex = -1;
-                    }
-                    this.currentMounth = null;
-                    this.modalIsOpen = false;
-                }else {
-                    this.swalError(res.data.message);
+        closeModal : function (newMounth) {
+            if (newMounth) {
+                this.mounths[this.currentIndex] = newMounth;
+            }else {
+                if (!this.mounths[0].id) {
+                    this.mounths.splice(0, 1);
                 }
-            }).catch(err => this.swalGeneralErrors(err)).finally(this.saving = false);
+            }
+            this.currentIndex = -1;
         },
         destroyMounth : function (index) {
             var mounth = this.mounths[index];

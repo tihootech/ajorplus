@@ -1,5 +1,5 @@
 <template>
-    <dashboard-layout title="وضعیت قمیرها">
+    <dashboard-layout :title="from == 'home' ? 'داشبورد' : 'قمیرها'">
 
         <div class="section heading">
             <div class="tile">
@@ -11,9 +11,9 @@
             </div>
         </div>
 
-        <div v-if="from == 'home'" class="section">
-            <div v-for="item in list" class="forge-section" :id="`section-${item}`">
-                <div class="overview">
+        <div class="section">
+            <div v-for="item in list" class="forge-section" :class="from == 'home' ? 'home-forges' : 'qomer-forges'" :id="`section-${item}`">
+                <div v-if="from == 'home'" class="overview">
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت هر دهانه <span v-if="item != 'all'"> قمیر {{item}} </span> </h3>
                         <div class="mounth-stats">
@@ -41,22 +41,10 @@
                     <div class="tile">
                         <h3 class="mb-4"> وضعیت قالب‌ها </h3>
                         <div class="brick-results">
-                            <div v-for="b, i in bricks" class="brick-result">
-                                <span v-if="b == 'T8'"> تیغه ۸ </span>
-                                <span v-if="b == 'T10'"> تیغه ۱۰ </span>
-                                <span v-if="b == 'T12'"> تیغه ۱۲ </span>
-                                <span v-if="b == 'T15'"> تیغه ۱۵ </span>
-                                <span v-if="b == 'FB'"> فومدار بزرگ </span>
-                                <span v-if="b == 'FS'"> فومدار کوچک </span>
-                                <span v-if="b == 'LS'"> لیفتون قالب کوچک </span>
-                                <span v-if="b == 'L5'"> لیفتون ۵ </span>
-                                <span v-if="b == 'L55'"> لیفتون ۵/۵ </span>
-                                <span v-if="b == 'LI'"> لیفتون عراقی </span>
-                                <span v-if="b == 'S25'"> سقفی 25 </span>
-                                <span v-if="b == 'S30'"> سقفی 30 </span>
-                                <span v-if="b == 'ETC'"> متفرقه </span>
+                            <div v-for="brickInFa, brickInEn in bricks" class="brick-result">
+                                <span> {{brickInFa}} </span>
                                 <i class="bi bi-arrow-left text-primary bigger"></i>
-                                <b>{{counts[item][b]}}</b>
+                                <b>{{counts[item][brickInEn]}}</b>
                             </div>
                         </div>
                     </div>
@@ -88,122 +76,7 @@
             </div>
         </div>
 
-        <div v-else class="forges-container">
-            <div v-for="mounths, symbol in forges" class="forge-section" :id="`section-${symbol}`">
-                <div class="forges qomer-forges">
-                    <span class="forge-arrow"></span>
-                    <div class="forge-parts">
-                        <div class="forge-part">
-                            <span v-for="n in forgeList[symbol].part1" class="forge-square" :style="`--w:${100/forgeList[symbol].part1.length}%;--bg:${mounths[n-1].color}`"
-                            @click="openModal(mounths, n-1)">
-                                <i v-if="mounths[n-1].fire" class="bi bi-fire fire"></i>
-                                <i v-if="mounths[n-1].mark" class="bi bi-star-fill mark"></i>
-                                <b class="forge-number"> {{faNumber(n)}} </b>
-                            </span>
-                        </div>
-                        <p class="forge-label"> <span>{{symbol}}</span> </p>
-                        <div class="forge-part">
-                            <span v-for="n in forgeList[symbol].part2" class="forge-square" :style="`--w:${100/forgeList[symbol].part1.length}%;--bg:${mounths[n-1].color}`"
-                            @click="openModal(mounths, n-1)">
-                                <i v-if="false" class="bi bi-fire"></i>
-                                <i v-if="false" class="bi bi-mark"></i>
-                                <b class="forge-number"> {{faNumber(n)}} </b>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="forge-arrow"></span>
-                </div>
-                <hr class="big-hr mt-5">
-            </div>
-        </div>
-
-
-        <Transition name="bounce">
-            <div v-if="currentMounth" class="modal">
-                <div class="modal-content">
-                    <span class="close" @click="currentMounth=null">&times;</span>
-                    <form v-if="canEdit" class="mounth-form" @submit.prevent="updateMounth">
-                        <div class="input-group">
-                            <label class="label"> آجر </label>
-                            <select class="input" v-model="currentMounth.brick" @change="autoSelectCapacity">
-                                <option value="T8"> تیغه ۸ </option>
-                                <option value="T10"> تیغه ۱۰ </option>
-                                <option value="T12"> تیغه ۱۲ </option>
-                                <option value="T15"> تیغه ۱۵ </option>
-                                <option value="FB"> فومدار بزرگ </option>
-                                <option value="FS"> فومدار کوچک </option>
-                                <option value="LS"> لیفتون قالب کوچک </option>
-                                <option value="L5"> لیفتون ۵cm </option>
-                                <option value="L55"> لیفتون ۵/۵cm </option>
-                                <option value="LI"> لیفتون عراقی </option>
-                                <option value="S25"> سقفی 25 </option>
-                                <option value="S30"> سقفی 30 </option>
-                                <option value="ETC"> متفرقه </option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> نام </label>
-                            <input required type="text" class="input" v-model="currentMounth.name">
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> ظرفیت </label>
-                            <input required type="text" class="input" v-model="currentMounth.quantity">
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> نماد </label>
-                            <select class="input" v-model="currentMounth.symbol">
-                                <option>A</option>
-                                <option>B</option>
-                                <option>C</option>
-                                <option>D</option>
-                                <option>E</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> وضعیت </label>
-                            <select class="input" v-model="currentMounth.state">
-                                <option value="1"> خالی </option>
-                                <option value="2"> خاموش </option>
-                                <option value="3"> درحال‌پخت </option>
-                                <option value="4"> پخته‌شده </option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="label"> توضیحات </label>
-                            <textarea v-model="currentMounth.discription" class="input" rows="6"></textarea>
-                        </div>
-                        <div class="input-group booleans">
-                            <i class="bi bi-fire bool-icon" @click="currentMounth.fire = !currentMounth.fire">
-                                <i v-show="currentMounth.fire" class="bi bi-check-circle-fill">
-                            </i>
-                            </i>
-                            <i class="bi bi-star-fill bool-icon" @click="currentMounth.mark = !currentMounth.mark">
-                                <i v-show="currentMounth.mark" class="bi bi-check-circle-fill">
-                            </i>
-                        </i>
-                        </div>
-                        <div class="input-group">
-                            <Btn icon="check-circle-fill" :loading="saving" type="submit" block>
-                                تایید
-                            </Btn>
-                        </div>
-                    </form>
-                    <div v-else class="view-mounth">
-                        <p> <span> نام </span> <b> : </b> <strong> {{currentMounth.name}} </strong> </p>
-                        <p> <span> آجر </span> <b> : </b> <strong> {{currentMounth.brick_name}} </strong> </p>
-                        <p> <span> ظرفیت </span> <b> : </b> <strong> {{currentMounth.quantity}} </strong> </p>
-                        <p> <span> نماد </span> <b> : </b> <strong> {{currentMounth.symbol}} </strong> </p>
-                        <p> <span> وضعیت </span> <b> : </b> <strong :style="`color:${currentMounth.color}`"> {{currentMounth.persian_state}} </strong> </p>
-                        <p> <span> توضیحات </span> <b> : </b> <strong> {{currentMounth.discription}} </strong> </p>
-                        <p class="icons">
-                            <i v-if="currentMounth.fire" class="bi bi-fire"></i>
-                            <i v-if="currentMounth.mark" class="bi bi-star-fill"></i>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </Transition>
-
+        <MounthModal :list="currentList" :index="currentIndex" @close="closeModal" />
 
     </dashboard-layout>
 </template>
@@ -212,13 +85,14 @@
 
 import { defineComponent } from 'vue';
 import DashboardLayout from '@/DashboardLayout.vue';
+import MounthModal from './Fragments/MounthModal.vue';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'vue-chartjs';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default {
-    components: { DashboardLayout, Pie },
+    components: { DashboardLayout, MounthModal, Pie },
     props : ['symbols', 'forges', 'charts', 'bricks', 'counts', 'from'],
     mounted : function () {
         this.list = [...this.symbols];
@@ -226,11 +100,8 @@ export default {
     },
     data : function () {
         return {
-            user : this.$page.props.user,
-            currentMounth : null,
             currentList : [],
             currentIndex : -1,
-            saving : false,
             list : [],
             chartOptions: {
                 responsive: true,
@@ -239,9 +110,6 @@ export default {
         }
     },
     computed : {
-        canEdit : function () {
-            return this.user.role == 'admin';
-        },
         forgeList : function () {
             var result = {};
             for (var i = 0; i < this.symbols.length; i++) {
@@ -287,20 +155,6 @@ export default {
         }
     },
     methods : {
-        autoSelectCapacity : function () {
-            this.currentMounth.quantity = null;
-            if( this.currentMounth.brick == 'T8' ) this.currentMounth.quantity = 13000;
-            if( this.currentMounth.brick == 'T10') this.currentMounth.quantity = 12000;
-            if( this.currentMounth.brick == 'T12') this.currentMounth.quantity = 8500;
-            if( this.currentMounth.brick == 'T15') this.currentMounth.quantity = 8000;
-            if( this.currentMounth.brick == 'FB' ) this.currentMounth.quantity = 4000;
-            if( this.currentMounth.brick == 'FS' ) this.currentMounth.quantity = 8000;
-            if( this.currentMounth.brick == 'LS' ) this.currentMounth.quantity = 26000;
-            if( this.currentMounth.brick == 'L5' ) this.currentMounth.quantity = 18000;
-            if( this.currentMounth.brick == 'L55') this.currentMounth.quantity = 18000;
-            if( this.currentMounth.brick == 'S25') this.currentMounth.quantity = 1800;
-            if( this.currentMounth.brick == 'S30') this.currentMounth.quantity = 1400;
-        },
         createArray : function (min, max) {
             max++;
             return Array(max - min).fill(min).map((value, i) => value + i);
@@ -309,23 +163,15 @@ export default {
             return n%2 == 0 ? (n/2) : (n-1)/2;
         },
         openModal : function (targetList, targetIndex) {
-            var mounth = targetList[targetIndex];
             this.currentList = targetList;
             this.currentIndex = targetIndex;
-            this.currentMounth = mounth;
         },
-        updateMounth : function () {
-            this.saving = true;
-            var url = route('mounth.update', this.currentMounth);
-            axios.put(url, this.currentMounth).then(res => {
-                if (res.data.success) {
-                    this.swalSuccess();
-                    this.currentList[this.currentIndex] = res.data.mounth;
-                    this.currentMounth = null;
-                }else {
-                    this.swalError(res.data.message);
-                }
-            }).catch(err => this.swalGeneralErrors(err)).finally(this.saving = false);
+        closeModal : function (newMounth) {
+            if (newMounth) {
+                this.currentList[this.currentIndex] = newMounth;
+            }
+            this.currentList = [];
+            this.currentIndex = -1;
         }
     }
 }
@@ -431,6 +277,9 @@ export default {
     width: 50%;
     padding: 8px 0;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
 }
 
 .brick-results .brick-result:not(:last-child) {
@@ -438,7 +287,7 @@ export default {
 }
 
 .brick-results .brick-result:nth-child(even) {
-    text-align: left;
+    justify-content:flex-end;
 }
 
 .brick-results .brick-result i {
@@ -451,8 +300,27 @@ export default {
 ============ *** FORGE SHAPES *** ================
 ============================================= ***/
 
-.forge-section:not(:last-child):target {
+.forge-section.home-forges:not(:last-child):target {
     padding-top: 150px;
+}
+
+.forge-section.qomer-forges:not(:nth-last-child(-n+2)):target {
+    padding-top: 150px;
+}
+
+.forge-section:target .forges {
+    animation-name: changeColor;
+    animation-duration: 1s;
+    animation-direction: alternate;
+}
+
+@keyframes changeColor {
+    from {
+        background-color: #013838;
+    }
+    to {
+        background-color: var(--primary);
+    }
 }
 
 .forges {
@@ -462,8 +330,9 @@ export default {
     position: relative;
     padding: 1.5rem 5rem;
     border-radius: 9999px;
-    border: 2px solid #0AD4D4;
+    border: 2px solid var(--secondary);
     margin: 1rem 2rem;
+    transition: 0.3s;
 }
 
 .forges > .forge-parts {
@@ -474,7 +343,7 @@ export default {
 .forges > .forge-parts > .forge-label {
     display: flex;
     justify-content: center;
-    border: 2px solid #0AD4D4;
+    border: 2px solid var(--secondary);
     border-radius: 99px;
     font-size: 1.25rem;
     font-weight: bold;
@@ -496,7 +365,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-left: 2px solid #0AD4D4;
+    border-left: 2px solid var(--secondary);
     cursor: pointer;
     background-color: var(--bg);
     transition: .2s;
@@ -505,12 +374,12 @@ export default {
 
 .forges > .forge-parts > .forge-part > .forge-square:hover {
     transform: scale(1.25);
-    border: 2px solid #0AD4D4;
+    border: 2px solid var(--secondary);
     z-index: 5;
 }
 
 .forges > .forge-parts > .forge-part > .forge-square:first-child {
-    border-right: 2px solid #0AD4D4;
+    border-right: 2px solid var(--secondary);
 }
 
 .forges > .forge-parts > .forge-part > .forge-square > i {
@@ -677,7 +546,7 @@ export default {
         left: 25vw;
     }
 
-    .forges.qomer-forges {
+    .qomer-forges .forges {
         width: 250vw;
     }
 

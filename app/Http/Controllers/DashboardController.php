@@ -28,11 +28,18 @@ class DashboardController extends Controller
 
         $charts = [];
         $counts = [];
-        $bricks = [
+
+        // bricks array
+        $bricksValues = [
             'T8', 'T10', 'T12', 'T15',
             'FB', 'FS', 'LS', 'L5','L55',
             'LI', 'S25', 'S30', 'ETC',
         ];
+        $bricks = [];
+        foreach ($bricksValues as $b) {
+            $bricks[$b] = __("BRICK_NAME_{$b}");
+        }
+
         if ($from == 'home') {
             for ($n=1; $n <= 4 ; $n++) {
                 $charts['all'][$n] = Mounth::where('state', $n)->count();
@@ -40,10 +47,10 @@ class DashboardController extends Controller
                     $charts[$symbol][$n] = Mounth::where('state', $n)->where('symbol', $symbol)->count();
                 }
             }
-            foreach ($bricks as $brick) {
-                $counts['all'][$brick] = Mounth::where('brick', $brick)->count();
+            foreach ($bricks as $enBrick => $faBbrick) {
+                $counts['all'][$enBrick] = Mounth::where('brick', $enBrick)->count();
                 foreach ($symbols as $symbol) {
-                    $counts[$symbol][$brick] = Mounth::where('brick', $brick)->where('symbol', $symbol)->count();
+                    $counts[$symbol][$enBrick] = Mounth::where('brick', $enBrick)->where('symbol', $symbol)->count();
                 }
             }
         }
