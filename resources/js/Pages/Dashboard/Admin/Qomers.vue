@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="item != 'all'" class="forges">
+                <div v-if="item != 'all'" class="forges" :class="`forge-${item}`">
                     <span class="forge-arrow"></span>
                     <div class="forge-parts">
                         <div class="forge-part">
@@ -340,6 +340,10 @@ export default {
     flex-direction: column-reverse;
 }
 
+.forges.forge-C > .forge-parts {
+    flex-direction: column;
+}
+
 .forges > .forge-parts > .forge-label {
     display: flex;
     justify-content: center;
@@ -356,6 +360,14 @@ export default {
 }
 
 .forges > .forge-parts > .forge-part:first-child {
+    flex-direction: row-reverse;
+}
+
+.forges.forge-C > .forge-parts > .forge-part:first-child {
+    flex-direction: row;
+}
+
+.forges.forge-C > .forge-parts > .forge-part:last-child {
     flex-direction: row-reverse;
 }
 
@@ -552,6 +564,18 @@ export default {
 
     .forges > .forge-parts > .forge-part > .forge-square > b, .forges > .forge-parts > .forge-part > .forge-square > i, .forges > .forge-parts > .forge-label > span {
         transform: rotate(-90deg);
+    }
+
+    .forges > .forge-parts > .forge-part:first-child {
+        flex-direction: row-reverse !important;
+    }
+
+    .forges.forge-C > .forge-parts > .forge-part:last-child {
+        flex-direction: row;
+    }
+
+    .forges.forge-C .forge-arrow {
+        transform: rotate(180deg) scaleX(-1) scaleY(-1);
     }
 
 }
