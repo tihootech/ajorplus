@@ -19,7 +19,7 @@
                         <div class="mounth-stats">
                             <div v-for="n in 4">
                                 <span v-if="n == 1"> خالی </span>
-                                <span v-if="n == 2"> خاموش </span>
+                                <span v-if="n == 2"> خشت خام </span>
                                 <span v-if="n == 3"> درحال‌پخت </span>
                                 <span v-if="n == 4"> پخته‌شده </span>
                                 <b> : {{charts[item][n]}} </b>
@@ -64,8 +64,8 @@
                         <div class="forge-part">
                             <span v-for="n in forgeList[item].part2" class="forge-square" :style="`--w:${100/forgeList[item].part1.length}%;--bg:${forges[item][n-1].color}`"
                             @click="openModal(forges[item], n-1)">
-                                <i v-if="false" class="bi bi-fire"></i>
-                                <i v-if="false" class="bi bi-mark"></i>
+                                <i v-if="forges[item][n-1].fire" class="bi bi-fire fire"></i>
+                                <i v-if="forges[item][n-1].mark" class="bi bi-star-fill mark"></i>
                                 <b class="forge-number"> {{faNumber(n)}} </b>
                             </span>
                         </div>
@@ -142,7 +142,7 @@ export default {
                 var item = list[i];
                 var chartData = {};
                 var dataSets = {};
-                chartData.labels = ['خالی', 'خاموش', 'درحال‌پخت', 'پخته‌شده'];
+                chartData.labels = ['خالی', 'خشت خام', 'درحال‌پخت', 'پخته‌شده'];
                 dataSets.backgroundColor = ['gray', 'brown', 'orange', 'green'];
                 dataSets.data = [];
                 for (var n = 1; n <= 4; n++) {

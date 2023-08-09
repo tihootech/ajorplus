@@ -20,7 +20,7 @@
                         <select class="input" v-model="filters.state">
                             <option value=""> -- همه -- </option>
                             <option value="1"> خالی </option>
-                            <option value="2"> خاموش </option>
+                            <option value="2"> خشت خام </option>
                             <option value="3"> درحال‌پخت </option>
                             <option value="4"> پخته‌شده </option>
                         </select>
