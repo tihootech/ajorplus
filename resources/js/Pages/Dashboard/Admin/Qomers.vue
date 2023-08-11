@@ -293,12 +293,13 @@ export default {
     width: 100%;
     display: flex;
     align-items: flex-end;
+    justify-content: center;
     margin-top: 15px;
 }
 
 .brick-results .brick-result .brick-counts .brick-count {
     margin: 0 10px;
-    width: 100px;
+    width: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
