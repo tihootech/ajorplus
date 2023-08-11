@@ -22,9 +22,9 @@
                                 <span v-if="n == 2"> خشت خام </span>
                                 <span v-if="n == 3"> درحال‌پخت </span>
                                 <span v-if="n == 4"> پخته‌شده </span>
-                                <b> : {{charts[item][n]}} </b>
+                                <b> : {{stateStats[item][n]}} </b>
                                 <div class="progress-bar" :class="`stat-${n}`">
-                                    <div class="progress" :style="`width:${(charts[item][n] * 100) / totals[item]}%`"> {{Math.round((charts[item][n] * 100) / totals[item])}}% </div>
+                                    <div class="progress" :style="`width:${(stateStats[item][n] * 100) / totals[item]}%`"> {{Math.round((stateStats[item][n] * 100) / totals[item])}}% </div>
                                 </div>
                             </div>
                         </div>
@@ -32,19 +32,22 @@
                         <p> مجموع : {{totals[item]}} </p>
                     </div>
                     <div class="tile">
-                        <h3 v-if="item == 'all'" class="mb-4"> وضعیت کلی قمیرها </h3>
-                        <h3 v-else class="mb-4"> وضعیت کلی قمیر {{item}} </h3>
-                        <div class="pie-chart-container">
-                            <Pie :options="chartOptions" :data="chartsData[item]" />
-                        </div>
-                    </div>
-                    <div class="tile">
                         <h3 class="mb-4"> وضعیت قالب‌ها </h3>
                         <div class="brick-results">
                             <div v-for="brickInFa, brickInEn in bricks" class="brick-result">
-                                <span> {{brickInFa}} </span>
-                                <i class="bi bi-arrow-left text-primary bigger"></i>
-                                <b>{{counts[item][brickInEn]}}</b>
+                                <div class="brick-info">
+                                    <b> {{brickInFa}} </b>
+                                    <i class="bi bi-arrow-left text-primary bigger"></i>
+                                    <b>{{brickStats[item][brickInEn]['sum']}}</b>
+                                </div>
+                                <div class="brick-counts">
+                                    <div v-for="n in brickCountsArray" :class="`brick-count brick-count-${brickStats[item][brickInEn][n]}`" :style="`height:${Number(brickStats[item][brickInEn][n]) * 25}px`">
+                                        <p> {{faNumber(brickStats[item][brickInEn][n])}} </p>
+                                        <span v-if="n == 4"> پخته‌شده </span>
+                                        <span v-if="n == 3"> درحال‌پخت </span>
+                                        <span v-if="n == 2"> خشت خام </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,13 +90,13 @@ import { defineComponent } from 'vue';
 import DashboardLayout from '@/DashboardLayout.vue';
 import MounthModal from './Fragments/MounthModal.vue';
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'vue-chartjs';
-ChartJS.register(ArcElement, Tooltip, Legend);
+// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+// import { Pie } from 'vue-chartjs';
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default {
-    components: { DashboardLayout, MounthModal, Pie },
-    props : ['symbols', 'forges', 'charts', 'bricks', 'counts', 'from'],
+    components: { DashboardLayout, MounthModal },
+    props : ['symbols', 'forges', 'stateStats', 'bricks', 'brickStats', 'from'],
     mounted : function () {
         this.list = [...this.symbols];
         this.list.unshift('all');
@@ -103,10 +106,11 @@ export default {
             currentList : [],
             currentIndex : -1,
             list : [],
-            chartOptions: {
-                responsive: true,
-                maintainAspectRatio: false,
-            },
+            brickCountsArray : [4, 3, 2],
+            // chartOptions: {
+            //     responsive: true,
+            //     maintainAspectRatio: false,
+            // },
         }
     },
     computed : {
@@ -129,30 +133,30 @@ export default {
                 var sum = 0;
                 var item = list[i];
                 for (var j = 1; j <= 4; j++) {
-                    sum += Number(this.charts[item][j]);
+                    sum += Number(this.stateStats[item][j]);
                 }
                 totals[item] = sum;
             }
             return totals;
         },
-        chartsData : function () {
-            var list = this.list;
-            var result = {};
-            for (var i = 0; i < list.length; i++) {
-                var item = list[i];
-                var chartData = {};
-                var dataSets = {};
-                chartData.labels = ['خالی', 'خشت خام', 'درحال‌پخت', 'پخته‌شده'];
-                dataSets.backgroundColor = ['gray', 'brown', 'orange', 'green'];
-                dataSets.data = [];
-                for (var n = 1; n <= 4; n++) {
-                    dataSets.data.push(this.charts[item][n]);
-                }
-                chartData.datasets = [dataSets];
-                result[item] = chartData;
-            }
-            return result;
-        }
+        // chartsData : function () {
+        //     var list = this.list;
+        //     var result = {};
+        //     for (var i = 0; i < list.length; i++) {
+        //         var item = list[i];
+        //         var chartData = {};
+        //         var dataSets = {};
+        //         chartData.labels = ['خالی', 'خشت خام', 'درحال‌پخت', 'پخته‌شده'];
+        //         dataSets.backgroundColor = ['gray', 'brown', 'orange', 'green'];
+        //         dataSets.data = [];
+        //         for (var n = 1; n <= 4; n++) {
+        //             dataSets.data.push(this.charts[item][n]);
+        //         }
+        //         chartData.datasets = [dataSets];
+        //         result[item] = chartData;
+        //     }
+        //     return result;
+        // }
     },
     methods : {
         createArray : function (min, max) {
@@ -188,22 +192,13 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
+    flex-wrap: wrap;
 }
 
 .overview > .tile {
     padding: 48px;
-}
-
-.overview > .tile:nth-child(1) {
-    width: 30%;
-}
-
-.overview > .tile:nth-child(2) {
-    width: 42%;
-}
-
-.overview > .tile:nth-child(3) {
-    width: 25%;
+    width: 100%;
+    margin: 24px 0;
 }
 
 .overview .mounth-stats {
@@ -274,20 +269,65 @@ export default {
 }
 
 .brick-results .brick-result {
-    width: 50%;
+    width: 33%;
     padding: 8px 0;
     font-size: 14px;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: flex-end;
     justify-content:flex-start;
+}
+
+.brick-results .brick-result .brick-info {
+    margin-bottom:auto;
+    font-size: 20px;
+}
+
+.brick-results .brick-result .brick-counts {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 15px;
+}
+
+.brick-results .brick-result .brick-counts .brick-count {
+    margin: 0 10px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.brick-results .brick-result .brick-counts .brick-count.brick-count-1 {
+    flex-direction: row-reverse;
+}
+
+.brick-results .brick-result .brick-counts .brick-count p {
+    font-size: 20px;
+}
+
+.brick-results .brick-result .brick-counts .brick-count.brick-count-1 p {
+    font-size: 18px;
+    margin-right: 4px;
+}
+
+.brick-results .brick-result .brick-counts .brick-count:nth-child(1) {
+    background-color: green;
+}
+
+.brick-results .brick-result .brick-counts .brick-count:nth-child(2) {
+    background-color: orange;
+}
+
+.brick-results .brick-result .brick-counts .brick-count:nth-child(3) {
+    background-color: brown;
 }
 
 .brick-results .brick-result:not(:last-child) {
     border-bottom: 3px solid var(--primary);
-}
-
-.brick-results .brick-result:nth-child(even) {
-    justify-content:flex-end;
 }
 
 .brick-results .brick-result i {

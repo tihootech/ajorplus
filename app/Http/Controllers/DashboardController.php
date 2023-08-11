@@ -26,8 +26,8 @@ class DashboardController extends Controller
             $forges[$symbol] = Mounth::whereSymbol($symbol)->orderBy('num')->get();
         }
 
-        $charts = [];
-        $counts = [];
+        $stateStats = [];
+        $brickStats = [];
 
         // bricks array
         $bricksValues = [
@@ -42,20 +42,26 @@ class DashboardController extends Controller
 
         if ($from == 'home') {
             for ($n=1; $n <= 4 ; $n++) {
-                $charts['all'][$n] = Mounth::where('state', $n)->count();
+                $stateStats['all'][$n] = Mounth::where('state', $n)->count();
                 foreach ($symbols as $symbol) {
-                    $charts[$symbol][$n] = Mounth::where('state', $n)->where('symbol', $symbol)->count();
+                    $stateStats[$symbol][$n] = Mounth::where('state', $n)->where('symbol', $symbol)->count();
                 }
             }
             foreach ($bricks as $enBrick => $faBbrick) {
-                $counts['all'][$enBrick] = Mounth::where('brick', $enBrick)->count();
+                $brickStats['all'][$enBrick]['sum'] = Mounth::where('brick', $enBrick)->count();
+                for ($n=4; $n>1 ; $n--) {
+                    $brickStats['all'][$enBrick][$n] = Mounth::where('brick', $enBrick)->where('state', $n)->count();
+                }
                 foreach ($symbols as $symbol) {
-                    $counts[$symbol][$enBrick] = Mounth::where('brick', $enBrick)->where('symbol', $symbol)->count();
+                    $brickStats[$symbol][$enBrick]['sum'] = Mounth::where('brick', $enBrick)->where('symbol', $symbol)->count();
+                    for ($n=4; $n>1 ; $n--) {
+                        $brickStats[$symbol][$enBrick][$n] = Mounth::where('brick', $enBrick)->where('symbol', $symbol)->where('state', $n)->count();
+                    }
                 }
             }
         }
 
-        return Inertia::render('Dashboard/Admin/Qomers', compact('symbols', 'forges', 'charts', 'bricks', 'counts', 'from'));
+        return Inertia::render('Dashboard/Admin/Qomers', compact('symbols', 'forges', 'stateStats', 'bricks', 'brickStats', 'from'));
     }
 
     public function data()
