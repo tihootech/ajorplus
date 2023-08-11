@@ -582,6 +582,11 @@ export default {
 
 
 @media only screen and (max-width: 1080px) {
+
+    .brick-results .brick-result {
+        width: 50%;
+    }
+
     .overview {
         flex-wrap: wrap;
         gap : 24px;
@@ -619,5 +624,12 @@ export default {
     }
 
 }
+
+@media only screen and (max-width: 780px) {
+    .brick-results .brick-result {
+        width: 100%;
+    }
+}
+
 
 </style>
