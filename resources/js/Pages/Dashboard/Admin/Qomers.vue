@@ -38,14 +38,19 @@
                                 <div class="brick-info">
                                     <b> {{brickInFa}} </b>
                                     <i class="bi bi-arrow-left text-primary bigger"></i>
-                                    <b>{{brickStats[item][brickInEn]['sum']}}</b>
+                                    <em> تعداد کل : </em>
+                                    <b>{{faNumber(brickStats[item][brickInEn]['sum'])}}</b>
                                 </div>
                                 <div class="brick-counts">
-                                    <div v-for="n in brickCountsArray" :class="`brick-count brick-count-${brickStats[item][brickInEn][n]}`" :style="`height:${Number(brickStats[item][brickInEn][n]) * 25}px`">
-                                        <p> {{faNumber(brickStats[item][brickInEn][n])}} </p>
+                                    <div v-for="n in brickCountsArray" class="brick-count" :style="`height:${(brickStats[item][brickInEn][n] * 25) + 50}px`">
+
                                         <span v-if="n == 4"> پخته‌شده </span>
                                         <span v-if="n == 3"> درحال‌پخت </span>
-                                        <span v-if="n == 2"> خشت خام </span>
+                                        <span v-if="n == 2"> خشت‌خام </span>
+
+                                        <p v-if="brickStats[item][brickInEn][n]"> {{faNumber(brickStats[item][brickInEn][n])}} </p>
+                                        <p v-else> <em><small>صفر</small></em> </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -301,17 +306,8 @@ export default {
     border-radius: 8px;
 }
 
-.brick-results .brick-result .brick-counts .brick-count.brick-count-1 {
-    flex-direction: row-reverse;
-}
-
 .brick-results .brick-result .brick-counts .brick-count p {
     font-size: 20px;
-}
-
-.brick-results .brick-result .brick-counts .brick-count.brick-count-1 p {
-    font-size: 18px;
-    margin-right: 4px;
 }
 
 .brick-results .brick-result .brick-counts .brick-count:nth-child(1) {

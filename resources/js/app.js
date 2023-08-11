@@ -83,6 +83,9 @@ var copyToClipboard = function(text) {
 }
 var enNumber = function (number) {
     if (typeof number === 'string') {
+        if (!number) {
+            return '۰';
+        }
         var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
         for(var i=0; i < 10; i++) {
             number = number.replace(persianNumbers[i], i);
