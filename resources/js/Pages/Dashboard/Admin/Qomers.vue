@@ -39,7 +39,8 @@
                                     <b> {{brickInFa}} </b>
                                     <i class="bi bi-arrow-left text-primary bigger"></i>
                                     <em> تعداد کل : </em>
-                                    <b>{{faNumber(brickStats[item][brickInEn]['sum'])}}</b>
+                                    <b v-if="brickStats[item][brickInEn]['sum']">{{faNumber(brickStats[item][brickInEn]['sum'])}}</b>
+                                    <em v-else> صفر </em>
                                 </div>
                                 <div class="brick-counts">
                                     <div v-for="n in brickCountsArray" class="brick-count" :style="`height:${(brickStats[item][brickInEn][n] * 25) + 50}px`">
