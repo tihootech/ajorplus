@@ -583,6 +583,10 @@ export default {
 
 @media only screen and (max-width: 1080px) {
 
+    .section {
+        padding: 24px !important;
+    }
+
     .brick-results .brick-result {
         width: 50%;
     }
@@ -626,9 +630,15 @@ export default {
 }
 
 @media only screen and (max-width: 780px) {
+
+    .section {
+        padding: 12px !important;
+    }
+
     .brick-results .brick-result {
         width: 100%;
     }
+
 }
 
 
